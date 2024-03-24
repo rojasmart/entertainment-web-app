@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Mouse+Memoirs&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
 
 * {
   box-sizing: border-box;
@@ -13,16 +13,12 @@
 }
 
 body {
-  font-family: "Mouse Memoirs", sans-serif;
-  background: url("/images/background-desktop.svg") !important;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  background-attachment: fixed !important;
+  font-family: "Outfit", sans-serif;
 }
 
 button {
   cursor: pointer;
-  font-family: "Mouse Memoirs", sans-serif;
+  font-family: "Outfit", sans-serif;
 }
 
 @media only screen and (max-width: 768px) {

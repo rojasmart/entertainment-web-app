@@ -1,7 +1,16 @@
+import { Text } from "@chakra-ui/react";
+
 function App() {
   return (
     <>
-      <h1>Hello</h1>
+      <Text
+        fontSize={"6xl"}
+        sx={{
+          fontFamily: "Outfit, sans-serif",
+        }}
+      >
+        Entertainment App
+      </Text>
     </>
   );
 }
