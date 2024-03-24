@@ -6,10 +6,11 @@
 
 :root {
   /* Neutral */
-  --white: hsla(0, 0%, 100%, 1);
-  --blue: hsla(222.74, 100%, 57.06%, 1);
-  --blue-transparent: hsla(207, 73%, 57.06%, 0.6);
-  --dark-navy: hsla(250, 68.57%, 27.45%, 1);
+  --red: hsl(0, 97%, 63%);
+  --dark-blue: hsl(223, 30%, 9%);
+  --greyish-blue: hsl(223, 23%, 46%);
+  --semi-dark-blue: hsl(223, 36%, 14%);
+  --white: hsl(0, 0%, 100%);
 }
 
 body {
