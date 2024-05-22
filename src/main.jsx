@@ -8,8 +8,7 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bg: "#10141E", // Change this to your desired color
-        color: "white",
+        bg: "hsl(223, 30%, 9%)", // Change this to your desired color
       },
     },
   },
