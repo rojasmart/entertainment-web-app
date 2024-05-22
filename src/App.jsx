@@ -66,7 +66,12 @@ export default function App() {
                 >
                   Remember me?
                 </Field>
-                <Button type="submit" colorScheme="purple" width="full">
+                <Button
+                  type="submit"
+                  style={{ backgroundColor: "var(--red)" }}
+                  color={"white"}
+                  width="full"
+                >
                   Login
                 </Button>
               </VStack>
