@@ -1,5 +1,5 @@
-import { AuthGoogleProvider } from "./contexts/AuthGoogleContext";
-import AppRoutes from "./routes/AppRoutes";
+import { AuthGoogleProvider } from "./contexts/authGoogle";
+import AppRoutes from "./routes/routes";
 
 export default function App() {
   return (

@@ -1,22 +1,22 @@
-import { Formik } from "formik";
+import { useContext } from "react";
+import { Navigate } from "react-router-dom";
+import { AuthGoogleContext } from "../../contexts/authGoogle";
 
-import {
-  Box,
-  Button,
-  Checkbox,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Heading,
-  Input,
-  VStack,
-  Field,
-} from "@chakra-ui/react";
+import { Button } from "@chakra-ui/button";
 
 export const Login = () => {
-  return (
-    <Flex align="center" justify="center" h="100vh">
+  const { signInGoogle, signed } = useContext(AuthGoogleContext);
+  async function handleLoginFromGoogle() {
+    await signInGoogle();
+  }
+  if (!signed) {
+    return <Button onClick={handleLoginFromGoogle}>Logar com o Google</Button>;
+  } else {
+    return <Navigate to="/Home" />;
+  }
+};
+
+/* <Flex align="center" justify="center" h="100vh">
       <Box
         p={6}
         color={"white"}
@@ -92,6 +92,4 @@ export const Login = () => {
           )}
         </Formik>
       </Box>
-    </Flex>
-  );
-};
+    </Flex> */
