@@ -9,12 +9,22 @@ import {
   FormErrorMessage,
   Input,
   VStack,
+  Heading,
 } from "@chakra-ui/react";
 
 export default function App() {
   return (
     <Flex align="center" justify="center" h="100vh">
-      <Box p={6} color={"white"} rounded="md" w={64} bg="var(--semi-dark-blue)">
+      <Box
+        p={6}
+        color={"white"}
+        rounded="20px"
+        w={"lg"}
+        bg="var(--semi-dark-blue)"
+      >
+        <Heading mb={6} textAlign="left">
+          Login
+        </Heading>
         <Formik
           initialValues={{
             email: "",
@@ -71,8 +81,9 @@ export default function App() {
                   style={{ backgroundColor: "var(--red)" }}
                   color={"white"}
                   width="full"
+                  size={"lg"}
                 >
-                  Login
+                  Login to your account
                 </Button>
               </VStack>
             </form>
