@@ -5,7 +5,14 @@ import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 import { auth } from "../../services/firebaseConfig";
 
-import { Button } from "@chakra-ui/button";
+import {
+  Flex,
+  Heading,
+  Button,
+  Input,
+  FormControl,
+  FormLabel,
+} from "@chakra-ui/react";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -33,37 +40,36 @@ export const Login = () => {
   }
   if (!signed) {
     return (
-      <div className="container">
-        <header className="header">
-          <img alt="Workflow" className="logoImg" />
-          <span>Por favor digite suas informações de login</span>
-        </header>
+      <Flex align="center" justify="center" h="100vh">
+        <Heading mb={6} textAlign="left">
+          Por favor digite suas informações de login
+        </Heading>
 
         <form onSubmit={handleSignIn}>
-          <div className="inputContainer">
-            <label htmlFor="email">E-mail</label>
-            <input
+          <FormControl>
+            <FormLabel htmlFor="email">E-mail</FormLabel>
+            <Input
               type="text"
               name="email"
               id="email"
               placeholder="johndoe@gmail.com"
               onChange={(e) => setEmail(e.target.value)}
             />
-          </div>
-          <div className="inputContainer">
-            <label htmlFor="password">Senha</label>
-            <input
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="password">Senha</FormLabel>
+            <Input
               type="password"
               name="password"
               id="password"
               placeholder="********************"
               onChange={(e) => setPassword(e.target.value)}
             />
-          </div>
+          </FormControl>
           <a href="#">Esqueceu sua senha ?</a>
-          <button className="button">
+          <Button className="button">
             Entrar <img alt="->" />
-          </button>
+          </Button>
           <div className="footer">
             <p>Você não tem uma conta?</p>
             <Link to="/register">Crie a sua conta aqui</Link>
@@ -71,7 +77,7 @@ export const Login = () => {
           <Button onClick={handleLoginFromGoogle}>Logar com o Google</Button>;
         </form>
         {error && <p>{error.message}</p>}
-      </div>
+      </Flex>
     );
   } else {
     return <Navigate to="/Home" />;
