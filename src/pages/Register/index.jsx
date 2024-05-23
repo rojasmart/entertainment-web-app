@@ -1,61 +1,85 @@
-import { useState } from "react";
+import { Field, Formik, Form } from "formik";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import { auth } from "../../services/firebaseConfig";
+import {
+  Button,
+  Heading,
+  Flex,
+  Box,
+  Input,
+  VStack,
+  FormControl,
+  FormLabel,
+} from "@chakra-ui/react";
 
 export function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
-
-  function handleSignOut(e) {
-    e.preventDefault();
-    createUserWithEmailAndPassword(email, password);
-  }
 
   if (loading) {
     return <p>carregando...</p>;
   }
+
   return (
-    <div className="container">
-      <header className="header">
-        <img alt="Workflow" className="logoImg" />
-        <span>Por favor digite suas informações de cadastro</span>
-      </header>
+    <Flex align="center" justify="center" h="100vh">
+      <Box
+        p={6}
+        color={"white"}
+        rounded="20px"
+        w={"lg"}
+        bg="var(--semi-dark-blue)"
+      >
+        <Heading mb={6} textAlign="left">
+          Por favor digite as suas informações
+        </Heading>
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          onSubmit={(values) => {
+            createUserWithEmailAndPassword(values.email, values.password);
+          }}
+        >
+          <Form>
+            <VStack spacing={4} align="flex-start">
+              <FormControl>
+                <FormLabel htmlFor="email">E-mail</FormLabel>
+                <Field
+                  as={Input}
+                  type="text"
+                  name="email"
+                  id="email"
+                  placeholder="johndoe@gmail.com"
+                />
+              </FormControl>
 
-      <form>
-        <div className="inputContainer">
-          <label htmlFor="email">E-mail</label>
-          <input
-            type="text"
-            name="email"
-            id="email"
-            placeholder="johndoe@gmail.com"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+              <FormControl>
+                <FormLabel htmlFor="password">Senha</FormLabel>
+                <Field
+                  as={Input}
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="********************"
+                />
+              </FormControl>
 
-        <div className="inputContainer">
-          <label htmlFor="password">Senha</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="********************"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-
-        <button onClick={handleSignOut} className="button">
-          Cadastrar <img alt="->" />
-        </button>
-        <div className="footer">
-          <p>Você já tem uma conta?</p>
-          <Link to="/">Acesse sua conta aqui</Link>
-        </div>
-      </form>
-    </div>
+              <Button
+                style={{ backgroundColor: "var(--red)" }}
+                color={"white"}
+                width="full"
+                size={"lg"}
+                type="submit"
+              >
+                Registar
+              </Button>
+              <div className="footer">
+                <p>Já tem uma conta?</p>
+                <Link to="/">Aceda à sua conta aqui</Link>
+              </div>
+            </VStack>
+          </Form>
+        </Formik>
+      </Box>
+    </Flex>
   );
 }
