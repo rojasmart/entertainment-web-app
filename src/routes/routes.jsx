@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PrivateRoutes } from ".";
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
+import { Register } from "../pages/Register";
 
 const AppRoutes = () => {
   return (
@@ -10,8 +11,9 @@ const AppRoutes = () => {
       <Fragment>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/Home" element={<PrivateRoutes />}>
-            <Route path="/Home" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/home" element={<PrivateRoutes />}>
+            <Route path="/home" element={<Home />} />
           </Route>
         </Routes>
       </Fragment>
