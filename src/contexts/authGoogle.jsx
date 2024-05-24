@@ -4,9 +4,9 @@ import { app } from "../services/firebaseConfig";
 import { Navigate } from "react-router-dom";
 const provider = new GoogleAuthProvider();
 
-export const AuthGoogleContext = createContext({});
+export const AuthContext = createContext({});
 
-export const AuthGoogleProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const auth = getAuth(app);
   const [user, setUser] = useState(null);
 
@@ -46,7 +46,7 @@ export const AuthGoogleProvider = ({ children }) => {
   }
 
   return (
-    <AuthGoogleContext.Provider
+    <AuthContext.Provider
       value={{
         signed: !!user,
         user,
@@ -55,6 +55,6 @@ export const AuthGoogleProvider = ({ children }) => {
       }}
     >
       {children}
-    </AuthGoogleContext.Provider>
+    </AuthContext.Provider>
   );
 };

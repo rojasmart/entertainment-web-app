@@ -1,10 +1,10 @@
-import { AuthGoogleProvider } from "./contexts/authGoogle";
+import { AuthProvider } from "./contexts/authGoogle";
 import AppRoutes from "./routes/routes";
 
 export default function App() {
   return (
-    <AuthGoogleProvider>
+    <AuthProvider>
       <AppRoutes />
-    </AuthGoogleProvider>
+    </AuthProvider>
   );
 }

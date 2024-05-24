@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { Field, Formik, Form } from "formik";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Navigate, Link } from "react-router-dom";
-import { AuthGoogleContext } from "../../contexts/authGoogle";
+import { AuthContext } from "../../contexts/authGoogle";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../services/firebaseConfig";
 import {
@@ -16,20 +18,33 @@ import {
 } from "@chakra-ui/react";
 
 export const Login = () => {
+  const navigate = useNavigate();
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
+  const { signInGoogle, signed } = useContext(AuthContext);
+  const [loginError, setLoginError] = useState(null);
 
-  const { signInGoogle, signed } = useContext(AuthGoogleContext);
+  useEffect(() => {
+    if (user || signed) {
+      navigate("/Home");
+      console.log("user", user);
+    }
+  }, [user, signed]);
 
   if (loading) {
     return <p>carregando...</p>;
   }
-  if (user) {
-    return <Navigate to="/Home" />;
-  }
 
   async function handleLoginFromGoogle() {
     await signInGoogle();
+  }
+
+  async function handleLoginWithEmail(values) {
+    try {
+      await signInWithEmailAndPassword(values.email, values.password);
+    } catch (error) {
+      setLoginError(error.message);
+    }
   }
 
   if (!signed) {
@@ -51,9 +66,7 @@ export const Login = () => {
               password: "",
               rememberMe: false,
             }}
-            onSubmit={(values) => {
-              signInWithEmailAndPassword(values.email, values.password);
-            }}
+            onSubmit={handleLoginWithEmail}
           >
             {({ errors, touched }) => (
               <Form>
@@ -95,7 +108,6 @@ export const Login = () => {
                   <Button size={"lg"} onClick={handleLoginFromGoogle}>
                     Logar com o Google
                   </Button>
-                  ;
                 </VStack>
               </Form>
             )}

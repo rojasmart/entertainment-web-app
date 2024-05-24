@@ -1,9 +1,9 @@
 import { Button, Text, Box } from "@chakra-ui/react";
 import { useContext } from "react"; // Import useContext hook from React
-import { AuthGoogleContext } from "../../contexts/authGoogle"; // Import your AuthGoogleContext
+import { AuthContext } from "../../contexts/authGoogle"; // Import your AuthGoogleContext
 
 export const Home = () => {
-  const { signOut } = useContext(AuthGoogleContext); // Access signOut function from the context
+  const { signOut } = useContext(AuthContext); // Access signOut function from the context
 
   const handleLogout = () => {
     signOut(); // Call signOut function
