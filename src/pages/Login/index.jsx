@@ -3,7 +3,7 @@ import { Field, Formik, Form } from "formik";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navigate, Link } from "react-router-dom";
-import { AuthContext } from "../../contexts/authGoogle";
+import { AuthContext } from "../../contexts/auth";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../services/firebaseConfig";
 import {

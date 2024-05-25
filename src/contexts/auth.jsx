@@ -1,5 +1,10 @@
 import { useState, createContext, useEffect } from "react";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { app } from "../services/firebaseConfig";
 import { Navigate } from "react-router-dom";
 const provider = new GoogleAuthProvider();
@@ -39,6 +44,19 @@ export const AuthProvider = ({ children }) => {
       });
   }
 
+  function signInWithEmailPassword(email, password) {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        setUser(user);
+        sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  }
+
   function signOut() {
     sessionStorage.clear();
     setUser(null);
@@ -51,6 +69,7 @@ export const AuthProvider = ({ children }) => {
         signed: !!user,
         user,
         signInGoogle,
+        signInWithEmailPassword,
         signOut,
       }}
     >
