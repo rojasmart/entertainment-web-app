@@ -26,6 +26,20 @@ export const AuthProvider = ({ children }) => {
     loadStorageData();
   });
 
+  function signInWithEmailPassword(email, password) {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        setUser(user);
+        sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(`Error code: ${errorCode}, message: ${errorMessage}`);
+      });
+  }
+
   function signInGoogle() {
     signInWithPopup(auth, provider)
       .then((result) => {
@@ -41,19 +55,6 @@ export const AuthProvider = ({ children }) => {
         const errorMessage = error.message;
         const email = error.email;
         const credential = GoogleAuthProvider.credentialFromError(error);
-      });
-  }
-
-  function signInWithEmailPassword(email, password) {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        setUser(user);
-        sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
       });
   }
 

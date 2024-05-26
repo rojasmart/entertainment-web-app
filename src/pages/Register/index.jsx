@@ -74,7 +74,7 @@ export function Register() {
               </Button>
               <div className="footer">
                 <p>Já tem uma conta?</p>
-                <Link to="/">Aceda à sua conta aqui</Link>
+                <Link to="/">Aceda à conta aqui</Link>
               </div>
             </VStack>
           </Form>
