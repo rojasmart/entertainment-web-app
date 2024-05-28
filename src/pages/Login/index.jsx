@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect } from "react";
+
 import { Field, Formik, Form } from "formik";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../services/firebaseConfig";
 import {
@@ -17,18 +17,20 @@ import {
 } from "@chakra-ui/react";
 
 export const Login = () => {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+      console.log("home"); // replace '/home' with the path to your Home page
+    }
+  }, [user, navigate]);
+
   if (loading) {
     return <p>carregando...</p>;
-  }
-  if (user) {
-    return console.log(user);
   }
 
   return (
@@ -54,6 +56,7 @@ export const Login = () => {
               .then((userCredential) => {
                 // User is signed in, redirect to Home
                 navigate("/home");
+
                 setSubmitting(false);
               })
               .catch((error) => {

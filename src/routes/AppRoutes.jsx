@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Login } from "../pages/Login";
 import { Register } from "../pages/Register";
 import { Home } from "../pages/Home";
+//import { PrivateRoutes } from "./PrivateRoutes";
 
 export function AppRoutes() {
   return (
@@ -10,8 +11,10 @@ export function AppRoutes() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/home" element={<Home />} />{" "}
-        {/* Add a new route for the Home page */}
+        {/*  <Route path="/Home" element={<PrivateRoutes />}>
+          <Route path="/Home" element={<Home />} />
+        </Route> */}
+        <Route path="/Home" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );
