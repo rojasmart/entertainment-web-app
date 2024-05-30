@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Field, Formik, Form } from "formik";
 import { Link } from "react-router-dom";
 /* import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
@@ -25,21 +24,27 @@ export const Login = () => {
   const toast = useToast();
 
   function handleSignIn(values) {
-    console.log("values", values);
-    signInWithEmailPassword(values.email, values.password);
-  }
-
-  useEffect(() => {
-    if (user) {
-      toast({
-        title: "Success",
-        description: "You have successfully signed in.",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
+    signInWithEmailPassword(values.email, values.password)
+      .then((response) => {
+        console.log(response);
+        toast({
+          title: "Success",
+          description: "You have successfully signed in.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: "Error",
+          description: error.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
       });
-    }
-  }, [user]);
+  }
 
   if (loading) {
     return <p>carregando...</p>;

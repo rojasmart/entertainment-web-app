@@ -18,18 +18,22 @@ export const AuthProvider = ({ children }) => {
     loadStorageData();
   }, []);
 
-  function signInWithEmailPassword(email, password) {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        setUser(user);
-        sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error(`Error code: ${errorCode}, message: ${errorMessage}`);
-      });
+  async function signInWithEmailPassword(email, password) {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      setUser(user);
+      sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(`Error code: ${errorCode}, message: ${errorMessage}`);
+      throw error; // Re-throw the error so it can be caught by the caller
+    }
   }
 
   function signOut() {
