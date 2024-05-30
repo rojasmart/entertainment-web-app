@@ -1,10 +1,9 @@
-import { useEffect } from "react";
-
 import { Field, Formik, Form } from "formik";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "../../services/firebaseConfig";
+/* import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "../../services/firebaseConfig"; */
+import { Navigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/auth";
 import {
   Flex,
   Heading,
@@ -14,23 +13,26 @@ import {
   FormLabel,
   Box,
   VStack,
+  Text,
 } from "@chakra-ui/react";
+import { useContext } from "react";
 
 export const Login = () => {
-  const [signInWithEmailAndPassword, user, loading, error] =
-    useSignInWithEmailAndPassword(auth);
+  /*  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth); */
+  const { signInWithEmailPassword, user, loading, error } =
+    useContext(AuthContext);
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user) {
-      navigate("/home");
-      console.log("home"); // replace '/home' with the path to your Home page
-    }
-  }, [user, navigate]);
+  function handleSignIn(values) {
+    console.log("values", values);
+    signInWithEmailPassword(values.email, values.password);
+  }
 
   if (loading) {
     return <p>carregando...</p>;
+  }
+  if (user) {
+    return <Navigate to="/Home" replace={true} />;
   }
 
   return (
@@ -51,20 +53,7 @@ export const Login = () => {
             password: "",
             rememberMe: false,
           }}
-          onSubmit={(values, { setSubmitting }) => {
-            signInWithEmailAndPassword(values.email, values.password)
-              .then((userCredential) => {
-                // User is signed in, redirect to Home
-                navigate("/home");
-
-                setSubmitting(false);
-              })
-              .catch((error) => {
-                // Handle error here
-                console.error(error);
-                setSubmitting(false);
-              });
-          }}
+          onSubmit={handleSignIn}
         >
           {({ errors, touched }) => (
             <Form>

@@ -11,13 +11,12 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const loadStorageData = () => {
       const storageUser = sessionStorage.getItem("@AuthFirebase:user");
-      const storageToken = sessionStorage.getItem("@AuthFirebase:token");
-      if (storageToken && storageUser) {
-        setUser(storageUser);
+      if (storageUser) {
+        setUser(JSON.parse(storageUser));
       }
     };
     loadStorageData();
-  });
+  }, []);
 
   function signInWithEmailPassword(email, password) {
     signInWithEmailAndPassword(auth, email, password)
