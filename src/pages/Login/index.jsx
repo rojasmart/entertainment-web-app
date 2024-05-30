@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Field, Formik, Form } from "formik";
 import { Link } from "react-router-dom";
 /* import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
@@ -13,20 +14,32 @@ import {
   FormLabel,
   Box,
   VStack,
-  Text,
+  useToast,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 
 export const Login = () => {
-  /*  const [signInWithEmailAndPassword, user, loading, error] =
-    useSignInWithEmailAndPassword(auth); */
   const { signInWithEmailPassword, user, loading, error } =
     useContext(AuthContext);
+
+  const toast = useToast();
 
   function handleSignIn(values) {
     console.log("values", values);
     signInWithEmailPassword(values.email, values.password);
   }
+
+  useEffect(() => {
+    if (user) {
+      toast({
+        title: "Success",
+        description: "You have successfully signed in.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  }, [user]);
 
   if (loading) {
     return <p>carregando...</p>;
