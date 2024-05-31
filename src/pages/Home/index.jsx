@@ -1,6 +1,18 @@
-import { Box, Flex, Text, Button, VStack, Card } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Menu,
+  MenuButton,
+  Avatar,
+  MenuList,
+  MenuItem,
+  Button,
+  VStack,
+  Container,
+} from "@chakra-ui/react";
 import { useContext } from "react"; // Import useContext hook from React
 import { AuthContext } from "../../contexts/auth"; // Import your AuthGoogleContext
+import { SearchInput } from "../Components/SearchInput";
 
 export const Layout = ({ children }) => {
   const { signOut } = useContext(AuthContext); // Access signOut function from the context
@@ -20,8 +32,23 @@ export const Layout = ({ children }) => {
       >
         <Button>Menu Item 1</Button>
         <Button>Menu Item 2</Button>
-        <Button onClick={handleLogout}>Log out</Button>
-        {/* Add more menu items here */}
+        <Button>Menu Item 3</Button>
+        <Button>Menu Item 4</Button>
+        <Menu>
+          <MenuButton
+            as={Button}
+            rounded={"full"}
+            variant={"link"}
+            cursor={"pointer"}
+          >
+            <Avatar size={"sm"} />
+          </MenuButton>
+          <MenuList>
+            <MenuItem>Profile</MenuItem>
+            <MenuItem>Settings</MenuItem>
+            <MenuItem onClick={handleLogout}>Log out</MenuItem>
+          </MenuList>
+        </Menu>
       </VStack>
       <Box flex="1" overflowY="auto">
         {children}
@@ -33,7 +60,9 @@ export const Layout = ({ children }) => {
 export const Home = () => {
   return (
     <Layout>
-      <Card></Card>
+      <Container maxW={"100%"}>
+        <SearchInput />
+      </Container>
     </Layout>
   );
 };
