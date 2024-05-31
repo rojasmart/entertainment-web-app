@@ -14,6 +14,7 @@ import {
   Box,
   VStack,
   useToast,
+  Text,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 
@@ -104,12 +105,16 @@ export const Login = () => {
                   width="full"
                   size={"lg"}
                 >
-                  Entrar
+                  Login to your account
                 </Button>
-                <div className="footer">
-                  <p>Você não tem uma conta?</p>
-                  <Link to="/register">Crie a sua conta aqui</Link>
-                </div>
+                <Box className="footer" display={"flex"} alignSelf={"center"}>
+                  <Text display={"flex"} gap={"21px"}>
+                    Dont have an account?
+                    <Link to="/register" color={"blue"}>
+                      Sign up
+                    </Link>
+                  </Text>
+                </Box>
               </VStack>
             </Form>
           )}
