@@ -78,26 +78,24 @@ export const Login = () => {
             <Form>
               <VStack spacing={4} align="flex-start">
                 <FormControl>
-                  <FormLabel htmlFor="email">E-mail</FormLabel>
                   <Field
                     as={Input}
                     type="text"
                     name="email"
                     id="email"
-                    placeholder="johndoe@gmail.com"
+                    placeholder="Email"
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel htmlFor="password">Senha</FormLabel>
                   <Field
                     as={Input}
                     type="password"
                     name="password"
                     id="password"
-                    placeholder="********************"
+                    placeholder="Password"
                   />
                 </FormControl>
-                <a href="#">Esqueceu a senha ?</a>
+
                 <Button
                   type="submit"
                   style={{ backgroundColor: "var(--red)" }}

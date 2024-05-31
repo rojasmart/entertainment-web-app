@@ -10,7 +10,7 @@ import {
   Input,
   VStack,
   FormControl,
-  FormLabel,
+  Text,
 } from "@chakra-ui/react";
 
 export function Register() {
@@ -31,7 +31,7 @@ export function Register() {
         bg="var(--semi-dark-blue)"
       >
         <Heading mb={6} textAlign="left">
-          Por favor digite as suas informações
+          Sign up
         </Heading>
         <Formik
           initialValues={{ email: "", password: "" }}
@@ -42,24 +42,22 @@ export function Register() {
           <Form>
             <VStack spacing={4} align="flex-start">
               <FormControl>
-                <FormLabel htmlFor="email">E-mail</FormLabel>
                 <Field
                   as={Input}
                   type="text"
                   name="email"
                   id="email"
-                  placeholder="johndoe@gmail.com"
+                  placeholder="Email"
                 />
               </FormControl>
 
               <FormControl>
-                <FormLabel htmlFor="password">Senha</FormLabel>
                 <Field
                   as={Input}
                   type="password"
                   name="password"
                   id="password"
-                  placeholder="********************"
+                  placeholder="Password"
                 />
               </FormControl>
 
@@ -70,12 +68,16 @@ export function Register() {
                 size={"lg"}
                 type="submit"
               >
-                Registar
+                Create an account
               </Button>
-              <div className="footer">
-                <p>Já tem uma conta?</p>
-                <Link to="/">Aceda à conta aqui</Link>
-              </div>
+              <Box className="footer" display={"flex"} alignSelf={"center"}>
+                <Text display={"flex"} gap={"21px"}>
+                  Already have an account?
+                  <Link to="/" color={"blue"}>
+                    Log in
+                  </Link>
+                </Text>
+              </Box>
             </VStack>
           </Form>
         </Formik>
