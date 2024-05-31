@@ -13,6 +13,7 @@ import {
 import { useContext } from "react"; // Import useContext hook from React
 import { AuthContext } from "../../contexts/auth"; // Import your AuthGoogleContext
 import { SearchInput } from "../Components/SearchInput";
+import { MovieGrid } from "../Components/MovieGrid";
 
 export const Layout = ({ children }) => {
   const { signOut } = useContext(AuthContext); // Access signOut function from the context
@@ -62,6 +63,7 @@ export const Home = () => {
     <Layout>
       <Container maxW={"100%"}>
         <SearchInput />
+        <MovieGrid />
       </Container>
     </Layout>
   );
