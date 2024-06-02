@@ -11,12 +11,23 @@ import {
   Container,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { useContext } from "react"; // Import useContext hook from React
+import { useContext, useEffect, useState } from "react"; // Import useContext hook from React
 import { AuthContext } from "../../contexts/auth"; // Import your AuthGoogleContext
 import { SearchInput } from "../Components/SearchInput";
 import { MovieGrid } from "../Components/MovieGrid";
+import { getMoviesTrending } from "../../api/Auth";
 
 export const Layout = ({ children }) => {
+  const [movies, setMovies] = useState([]);
+  const [tvSeries, setTvSeries] = useState([]);
+  const [trending, setTrending] = useState([]);
+
+  useEffect(() => {
+    /* getMovies().then((data) => setMovies(data.results));
+    getTVSeries().then((data) => setTvSeries(data.results)); */
+    getMoviesTrending().then((data) => setTrending(data.results));
+  }, []);
+
   const { signOut } = useContext(AuthContext); // Access signOut function from the context
   const handleLogout = () => {
     signOut(); // Call signOut function
