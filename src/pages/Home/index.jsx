@@ -10,6 +10,7 @@ import {
   VStack,
   Container,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { useContext } from "react"; // Import useContext hook from React
 import { AuthContext } from "../../contexts/auth"; // Import your AuthGoogleContext
 import { SearchInput } from "../Components/SearchInput";
@@ -31,10 +32,15 @@ export const Layout = ({ children }) => {
         alignItems="start"
         spacing={4}
       >
-        <Button>Menu Item 1</Button>
-        <Button>Menu Item 2</Button>
-        <Button>Menu Item 3</Button>
-        <Button>Menu Item 4</Button>
+        <Link to="/Movies">
+          <Button>Menu Item 1</Button>
+        </Link>
+        <Link to="/Tvseries">
+          <Button>Menu Item 2</Button>
+        </Link>
+        <Link to="/Bookmarks">
+          <Button>Menu Item 3</Button>
+        </Link>
         <Menu>
           <MenuButton
             as={Button}

@@ -15,10 +15,10 @@ export function AppRoutes() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/*" element={<PrivateRoutes />}>
-          <Route path="/Home" element={<Home />} />
-          <Route path="/Movies" element={<Movies />} />
-          <Route path="/Tvseries" element={<TvSeries />} />
-          <Route path="/Bookmarks" element={<Bookmarks />} />
+          <Route path="Home" element={<Home />} />
+          <Route path="Movies" element={<Movies />} />
+          <Route path="Tvseries" element={<TvSeries />} />
+          <Route path="Bookmarks" element={<Bookmarks />} />
         </Route>
       </Routes>
     </BrowserRouter>
