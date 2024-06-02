@@ -1,8 +1,9 @@
-import { Grid, Box } from "@chakra-ui/react";
+import propTypes from "prop-types";
+import { Grid, Box, Text } from "@chakra-ui/react";
 
 import ScrollContainer from "react-indiana-drag-scroll";
 
-export const MovieGrid = () => {
+export const MovieGrid = ({ text }) => {
   return (
     <>
       <ScrollContainer
@@ -75,54 +76,56 @@ export const MovieGrid = () => {
           {/* Add more cards as needed */}
         </Grid>
       </ScrollContainer>
-
+      <Text color="white" fontSize={"3xl"}>
+        {text}
+      </Text>
       <Grid templateColumns="repeat(4, 1fr)" gap={6}>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
-        <Box bg="white" height="200px" borderRadius="md" p={3}>
+        <Box bg="white" height="250px" borderRadius="md" p={3}>
           {/* Card content goes here */}
         </Box>
 
@@ -130,4 +133,8 @@ export const MovieGrid = () => {
       </Grid>
     </>
   );
+};
+
+MovieGrid.propTypes = {
+  text: propTypes.string,
 };

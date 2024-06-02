@@ -22,7 +22,7 @@ export const Layout = ({ children }) => {
     signOut(); // Call signOut function
   };
   return (
-    <Flex height="100vh">
+    <Flex>
       <VStack
         as="nav"
         bg="gray.200"
@@ -69,7 +69,7 @@ export const Home = () => {
     <Layout>
       <Container maxW={"100%"}>
         <SearchInput />
-        <MovieGrid />
+        <MovieGrid text="Recommended for you" />
       </Container>
     </Layout>
   );
