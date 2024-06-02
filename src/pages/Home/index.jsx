@@ -32,14 +32,17 @@ export const Layout = ({ children }) => {
         alignItems="start"
         spacing={4}
       >
+        <Link to="/">
+          <Button>Home</Button>
+        </Link>
         <Link to="/Movies">
-          <Button>Menu Item 1</Button>
+          <Button>Movies</Button>
         </Link>
         <Link to="/Tvseries">
-          <Button>Menu Item 2</Button>
+          <Button>TV Series</Button>
         </Link>
         <Link to="/Bookmarks">
-          <Button>Menu Item 3</Button>
+          <Button>Bookmarks</Button>
         </Link>
         <Menu>
           <MenuButton
@@ -69,7 +72,11 @@ export const Home = () => {
     <Layout>
       <Container maxW={"100%"}>
         <SearchInput />
-        <MovieGrid text="Recommended for you" />
+        <MovieGrid
+          text="Recommended for you"
+          textScroll="Trending"
+          useScrollContainer={true}
+        />
       </Container>
     </Layout>
   );

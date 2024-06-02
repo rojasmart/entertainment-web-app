@@ -9,7 +9,7 @@ export const TvSeries = () => {
     <Layout>
       <Container maxW={"100%"}>
         <SearchInput />
-        <MovieGrid text="TV Series" />
+        <MovieGrid text="TV Series" useScrollContainer={false} />
       </Container>
     </Layout>
   );

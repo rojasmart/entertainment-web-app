@@ -8,7 +8,7 @@ export const Bookmarks = () => {
     <Layout>
       <Container maxW={"100%"}>
         <SearchInput />
-        <MovieGrid text="Bookmarks" />
+        <MovieGrid text="Bookmarks" useScrollContainer={false} />
       </Container>
     </Layout>
   );
