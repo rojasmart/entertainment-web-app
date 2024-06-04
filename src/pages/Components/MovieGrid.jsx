@@ -104,7 +104,7 @@ export const MovieGrid = ({
                 </List>
               </Box>
               <Text color={"white"} fontSize={"1xl"}>
-                {item.title}
+                {item.isMovie ? item.title : item.original_name}
               </Text>
             </Box>
           </>
