@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import {
   Box,
   Flex,
@@ -73,6 +74,12 @@ export const Home = () => {
   const [tvSeries, setTvSeries] = useState([]);
   const [trending, setTrending] = useState([]);
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = useCallback((term) => {
+    setSearchTerm(term);
+  }, []);
+
   useEffect(() => {
     getMovies().then((data) => setMovies(data.results));
     getTVSeries().then((data) => setTvSeries(data.results));
@@ -80,19 +87,26 @@ export const Home = () => {
     //getMoviesPopular().then((data) => setMovies(data.results));
   }, []);
 
-  console.log("movies", movies);
-  console.log("tvSeries", tvSeries);
+  const filteredMovies = movies.filter((movie) =>
+    movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const filteredTvSeries = tvSeries.filter((series) =>
+    series.original_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const filteredTrending = trending.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <Layout>
       <Container maxW={"100%"}>
-        <SearchInput />
+        <SearchInput onSearch={handleSearch} />
         <MovieGrid
           text="Recommended for you"
           textScroll="Trending"
-          trending={trending}
-          movies={movies}
-          tvSeries={tvSeries}
+          trending={filteredTrending}
+          movies={filteredMovies}
+          tvSeries={filteredTvSeries}
           useScrollContainer={true}
         />
       </Container>
