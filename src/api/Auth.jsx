@@ -20,3 +20,9 @@ export async function getTVSeries() {
   const data = await response.json();
   return data;
 }
+
+export async function getMoviesPopular() {
+  const response = await fetch(`${baseURL}/person/popular?api_key=${apiKey}`);
+  const data = await response.json();
+  return data;
+}

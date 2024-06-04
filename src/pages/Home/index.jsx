@@ -15,19 +15,9 @@ import { useContext, useEffect, useState } from "react"; // Import useContext ho
 import { AuthContext } from "../../contexts/auth"; // Import your AuthGoogleContext
 import { SearchInput } from "../Components/SearchInput";
 import { MovieGrid } from "../Components/MovieGrid";
-import { getMoviesTrending } from "../../api/Auth";
+import { getMoviesTrending, getMovies, getTVSeries } from "../../api/Auth";
 
 export const Layout = ({ children }) => {
-  const [movies, setMovies] = useState([]);
-  const [tvSeries, setTvSeries] = useState([]);
-  const [trending, setTrending] = useState([]);
-
-  useEffect(() => {
-    /* getMovies().then((data) => setMovies(data.results));
-    getTVSeries().then((data) => setTvSeries(data.results)); */
-    getMoviesTrending().then((data) => setTrending(data.results));
-  }, []);
-
   const { signOut } = useContext(AuthContext); // Access signOut function from the context
   const handleLogout = () => {
     signOut(); // Call signOut function
@@ -79,6 +69,20 @@ export const Layout = ({ children }) => {
 };
 
 export const Home = () => {
+  const [movies, setMovies] = useState([]);
+  const [tvSeries, setTvSeries] = useState([]);
+  const [trending, setTrending] = useState([]);
+
+  useEffect(() => {
+    getMovies().then((data) => setMovies(data.results));
+    getTVSeries().then((data) => setTvSeries(data.results));
+    getMoviesTrending().then((data) => setTrending(data.results));
+    //getMoviesPopular().then((data) => setMovies(data.results));
+  }, []);
+
+  console.log("movies", movies);
+  console.log("tvSeries", tvSeries);
+
   return (
     <Layout>
       <Container maxW={"100%"}>
@@ -86,6 +90,9 @@ export const Home = () => {
         <MovieGrid
           text="Recommended for you"
           textScroll="Trending"
+          trending={trending}
+          movies={movies}
+          tvSeries={tvSeries}
           useScrollContainer={true}
         />
       </Container>
