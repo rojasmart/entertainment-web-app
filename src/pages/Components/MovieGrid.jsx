@@ -17,7 +17,9 @@ export const MovieGrid = ({
     isMovie: false,
   }));
 
-  const allItems = [...movies, ...tvSeries].sort(() => Math.random() - 0.5);
+  const allItems = [...moviesWithFlag, ...tvSeriesWithFlag].sort(
+    () => Math.random() - 0.5
+  );
 
   return (
     <>
