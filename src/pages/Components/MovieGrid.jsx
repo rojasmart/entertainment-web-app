@@ -12,14 +12,14 @@ export const MovieGrid = ({
   tvSeries,
 }) => {
   const moviesWithFlag = movies.map((movie) => ({ ...movie, isMovie: true }));
-  const tvSeriesWithFlag = tvSeries.map((series) => ({
-    ...series,
-    isMovie: false,
-  }));
+  const tvSeriesWithFlag = tvSeries
+    ? tvSeries.map((series) => ({ ...series, isMovie: false }))
+    : [];
 
-  const allItems = [...moviesWithFlag, ...tvSeriesWithFlag].sort(
-    () => Math.random() - 0.5
-  );
+  const allItems =
+    tvSeriesWithFlag.length > 0
+      ? [...moviesWithFlag, ...tvSeriesWithFlag].sort(() => Math.random() - 0.5)
+      : [...moviesWithFlag].sort(() => Math.random() - 0.5);
 
   return (
     <>
