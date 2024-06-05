@@ -1,4 +1,7 @@
 import propTypes from "prop-types";
+
+import { useNavigate } from "react-router-dom";
+
 import { Grid, Box, Text, Flex, Card, List, ListItem } from "@chakra-ui/react";
 
 import ScrollContainer from "react-indiana-drag-scroll";
@@ -11,6 +14,8 @@ export const MovieGrid = ({
   movies,
   tvSeries,
 }) => {
+  const navigate = useNavigate();
+
   const moviesWithFlag = movies.map((movie) => ({ ...movie, isMovie: true }));
   const tvSeriesWithFlag = tvSeries
     ? tvSeries.map((series) => ({ ...series, isMovie: false }))
@@ -72,7 +77,10 @@ export const MovieGrid = ({
       <Grid templateColumns="repeat(4, 1fr)" gap={6}>
         {allItems.map((item) => (
           <>
-            <Box>
+            <Box
+              onClick={() => navigate(`/Movies/${item.id}`)}
+              cursor={"pointer"}
+            >
               <Card
                 key={item.id}
                 bg="white"
@@ -80,10 +88,14 @@ export const MovieGrid = ({
                 borderRadius="md"
                 p={3}
                 minW="174px"
-                style={{
+                sx={{
                   backgroundImage: `url(https://image.tmdb.org/t/p/w500${item.backdrop_path})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
+                  transition: "transform .2s", // Add this line
+                  ":hover": {
+                    transform: "scale(1.03)", // Add this line
+                  },
                 }}
               />
               <Box as="div">
