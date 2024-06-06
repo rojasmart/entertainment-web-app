@@ -78,7 +78,9 @@ export const MovieGrid = ({
         {allItems.map((item) => (
           <>
             <Box
-              onClick={() => navigate(`/Movies/${item.id}`)}
+              onClick={() =>
+                navigate(`/Movies/${item.id}`, { state: { item } })
+              }
               cursor={"pointer"}
             >
               <Card
