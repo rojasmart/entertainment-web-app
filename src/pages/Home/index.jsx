@@ -18,13 +18,20 @@ import { SearchInput } from "../Components/SearchInput";
 import { MovieGrid } from "../Components/MovieGrid";
 import { getMoviesTrending, getMovies, getTVSeries } from "../../api/Auth";
 
-export const Layout = ({ children }) => {
+export const Layout = ({ children, backgroundImage }) => {
   const { signOut } = useContext(AuthContext); // Access signOut function from the context
   const handleLogout = () => {
     signOut(); // Call signOut function
   };
   return (
-    <Flex>
+    <Flex
+      style={{
+        backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
+        backgroundSize: "cover", // Cover the entire space
+        backgroundRepeat: "no-repeat", // Do not repeat the image
+        backdropFilter: "blur(15px)", // Add a blur filter
+      }}
+    >
       <VStack
         as="nav"
         bg="gray.200"

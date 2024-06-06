@@ -7,8 +7,10 @@ export const MoviePage = () => {
   const location = useLocation();
   const item = location.state.item;
 
+  const movieBackground = `https://image.tmdb.org/t/p/original${item.backdrop_path}`;
+
   return (
-    <Layout>
+    <Layout backgroundImage={movieBackground}>
       <Container
         maxW={"100%"}
         display={"flex"}
