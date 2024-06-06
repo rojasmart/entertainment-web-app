@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 
-import { Container, Text, Box } from "@chakra-ui/react";
+import { Container, Text, Box, List, ListItem } from "@chakra-ui/react";
 import { Layout } from "../pages/Home";
 
 export const MoviePage = () => {
@@ -16,9 +16,10 @@ export const MoviePage = () => {
         alignItems={"center"}
         flexDirection={"column"}
       >
-        <Text color="white" fontSize={"4xl"}>
+        <Text mt={6} mb={6} color="white" fontSize={"4xl"}>
           {item.title}
         </Text>
+
         <video
           width="800"
           height="240"
@@ -28,10 +29,32 @@ export const MoviePage = () => {
           <source src={item.videoUrl} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <Box maxW="800px" p={4} bg="gray.700" borderRadius="md" mt={4}>
-          <Text color="white" fontSize={"xl"}>
-            {item.overview}
-          </Text>
+        <Box maxW="825px" p={4} mt={2}>
+          <List
+            styleType="disc"
+            display="flex"
+            flexDirection="row"
+            alignItems="flex-start"
+          >
+            <ListItem
+              color={"white"}
+              fontSize={"md"}
+              marginRight={6}
+              listStyleType="none"
+            >
+              {new Date(
+                item.isMovie ? item.release_date : item.first_air_date
+              ).getFullYear()}
+            </ListItem>
+            <ListItem color={"white"} fontSize={"md"}>
+              {item.isMovie ? "Movie" : "TV Series"}
+            </ListItem>
+          </List>
+          <Box p={4} bg="gray.700" borderRadius="md" mt={4}>
+            <Text color="white" fontSize={"xl"}>
+              {item.overview}
+            </Text>
+          </Box>
         </Box>
       </Container>
     </Layout>
