@@ -30,29 +30,36 @@ export const Layout = ({ children, backgroundImage }) => {
         backgroundSize: "cover", // Cover the entire space
         backgroundRepeat: "no-repeat", // Do not repeat the image
         backdropFilter: "blur(15px)", // Add a blur filter
+        height: "100vh", // Full height of the viewport
       }}
     >
       <VStack
         as="nav"
         bg="gray.200"
-        p={4}
-        width="200px"
-        justifyContent="start"
-        alignItems="start"
+        p={2}
+        width="150px"
+        justifyContent="space-between"
+        alignItems="center"
         spacing={4}
+        height={"90vh"}
+        borderRadius={"md"}
+        m={6}
+        backgroundColor="var(--semi-dark-blue)"
       >
-        <Link to="/">
-          <Button>Home</Button>
-        </Link>
-        <Link to="/Movies">
-          <Button>Movies</Button>
-        </Link>
-        <Link to="/Tvseries">
-          <Button>TV Series</Button>
-        </Link>
-        <Link to="/Bookmarks">
-          <Button>Bookmarks</Button>
-        </Link>
+        <Box display={"flex"} flexDirection={"column"} gap={6}>
+          <Link to="/">
+            <Button>Home</Button>
+          </Link>
+          <Link to="/Movies">
+            <Button>Movies</Button>
+          </Link>
+          <Link to="/Tvseries">
+            <Button>TV Series</Button>
+          </Link>
+          <Link to="/Bookmarks">
+            <Button>Bookmarks</Button>
+          </Link>
+        </Box>
         <Menu>
           <MenuButton
             as={Button}
