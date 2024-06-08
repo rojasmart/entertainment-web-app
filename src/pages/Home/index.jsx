@@ -24,63 +24,89 @@ export const Layout = ({ children, backgroundImage }) => {
     signOut(); // Call signOut function
   };
   return (
-    <Flex
-      className={"hello2"}
-      style={{
-        backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
-        backgroundSize: "cover", // Cover the entire space
-        backgroundRepeat: "no-repeat", // Do not repeat the image
-        backdropFilter: "blur(15px)", // Add a blur filter
-      }}
-    >
-      <VStack
-        as="nav"
-        bg="gray.200"
-        p={2}
-        width="150px"
-        justifyContent="space-between"
-        alignItems="center"
-        spacing={4}
-        height={"90vh"}
-        borderRadius={"md"}
-        m={6}
-        backgroundColor="var(--semi-dark-blue)"
-        className="hello3"
-      >
-        <Box display={"flex"} flexDirection={"column"} gap={6}>
-          <Link to="/">
-            <Button>Home</Button>
-          </Link>
-          <Link to="/Movies">
-            <Button>Movies</Button>
-          </Link>
-          <Link to="/Tvseries">
-            <Button>TV Series</Button>
-          </Link>
-          <Link to="/Bookmarks">
-            <Button>Bookmarks</Button>
-          </Link>
+    <Box>
+      <Flex className={"hello2"}>
+        <Box
+          style={{
+            backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
+            backgroundSize: "cover", // Cover the entire space
+            backgroundRepeat: "no-repeat", // Do not repeat the image
+            filter: "blur(10px)", // Add a blur filter
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "100vh",
+            width: "100%",
+            zIndex: "-1",
+            opacity: 0.5, // Adjust the opacity as needed
+            backgroundColor: "black",
+          }}
+        ></Box>
+        <div
+          style={{
+            backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
+            backgroundSize: "cover", // Cover the entire space
+            backgroundRepeat: "no-repeat", // Do not repeat the image
+            filter: "blur(10px)", // Add a blur filter
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "100%",
+            width: "100%",
+            zIndex: "-1",
+            opacity: 0.5, // Adjust the opacity as needed
+            backgroundColor: "black",
+          }}
+        ></div>
+        <VStack
+          as="nav"
+          bg="gray.200"
+          p={2}
+          width="150px"
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={4}
+          height={"90vh"}
+          borderRadius={"md"}
+          m={6}
+          backgroundColor="var(--semi-dark-blue)"
+          className="hello3"
+        >
+          <Box display={"flex"} flexDirection={"column"} gap={6}>
+            <Link to="/">
+              <Button>Home</Button>
+            </Link>
+            <Link to="/Movies">
+              <Button>Movies</Button>
+            </Link>
+            <Link to="/Tvseries">
+              <Button>TV Series</Button>
+            </Link>
+            <Link to="/Bookmarks">
+              <Button>Bookmarks</Button>
+            </Link>
+          </Box>
+          <Menu>
+            <MenuButton
+              as={Button}
+              rounded={"full"}
+              variant={"link"}
+              cursor={"pointer"}
+            >
+              <Avatar size={"sm"} />
+            </MenuButton>
+            <MenuList>
+              <MenuItem>Profile</MenuItem>
+              <MenuItem>Settings</MenuItem>
+              <MenuItem onClick={handleLogout}>Log out</MenuItem>
+            </MenuList>
+          </Menu>
+        </VStack>
+        <Box flex="1" className={"hello4"} overflowY="auto">
+          {children}
         </Box>
-        <Menu>
-          <MenuButton
-            as={Button}
-            rounded={"full"}
-            variant={"link"}
-            cursor={"pointer"}
-          >
-            <Avatar size={"sm"} />
-          </MenuButton>
-          <MenuList>
-            <MenuItem>Profile</MenuItem>
-            <MenuItem>Settings</MenuItem>
-            <MenuItem onClick={handleLogout}>Log out</MenuItem>
-          </MenuList>
-        </Menu>
-      </VStack>
-      <Box flex="1" className={"hello4"} overflowY="auto">
-        {children}
-      </Box>
-    </Flex>
+      </Flex>
+    </Box>
   );
 };
 
