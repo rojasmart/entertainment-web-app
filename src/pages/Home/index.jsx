@@ -25,12 +25,12 @@ export const Layout = ({ children, backgroundImage }) => {
   };
   return (
     <Flex
+      className={"hello2"}
       style={{
         backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
         backgroundSize: "cover", // Cover the entire space
         backgroundRepeat: "no-repeat", // Do not repeat the image
         backdropFilter: "blur(15px)", // Add a blur filter
-        height: "100vh", // Full height of the viewport
       }}
     >
       <VStack
@@ -45,6 +45,7 @@ export const Layout = ({ children, backgroundImage }) => {
         borderRadius={"md"}
         m={6}
         backgroundColor="var(--semi-dark-blue)"
+        className="hello3"
       >
         <Box display={"flex"} flexDirection={"column"} gap={6}>
           <Link to="/">
@@ -76,7 +77,7 @@ export const Layout = ({ children, backgroundImage }) => {
           </MenuList>
         </Menu>
       </VStack>
-      <Box flex="1" overflowY="auto">
+      <Box flex="1" className={"hello4"} overflowY="auto">
         {children}
       </Box>
     </Flex>
@@ -113,7 +114,7 @@ export const Home = () => {
 
   return (
     <Layout>
-      <Container maxW={"100%"}>
+      <Container maxW={"100%"} className="hello">
         <SearchInput onSearch={handleSearch} />
         <MovieGrid
           text="Recommended for you"
