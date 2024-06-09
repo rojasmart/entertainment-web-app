@@ -9,15 +9,17 @@ export const SearchInput = ({ onSearch }) => {
   };
 
   return (
-    <Stack spacing={4}>
+    <Stack spacing={4} mt={10} mb={10}>
       <InputGroup>
         <InputLeftElement pointerEvents="none">
-          <SearchIcon color="gray.300" />
+          <SearchIcon color="gray.300" size={"lg"} />
         </InputLeftElement>
         <Input
           placeholder="search title movie"
           onChange={handleInputChange}
           color={"white"}
+          size={"lg"}
+          border="none"
         />
       </InputGroup>
     </Stack>
