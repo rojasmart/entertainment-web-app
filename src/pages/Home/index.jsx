@@ -10,6 +10,7 @@ import {
   Button,
   VStack,
   Container,
+  Img,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react"; // Import useContext hook from React
@@ -68,18 +69,23 @@ export const Layout = ({ children, backgroundImage }) => {
           as="nav"
           bg="gray.200"
           p={2}
-          width="150px"
+          width="96px"
           justifyContent="space-between"
           alignItems="center"
           spacing={4}
           height={"90vh"}
-          borderRadius={"md"}
+          borderRadius={"20px"}
           m={6}
           backgroundColor="var(--semi-dark-blue)"
           className="hello3"
         >
-          <Box display={"flex"} flexDirection={"column"} gap={6}>
-            <img src={Logo} alt="Logo" />
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            gap={6}
+            alignItems={"center"}
+          >
+            <Img src={Logo} alt="Logo" mt={6} mb={12} />
             <Link to="/">
               <img src={HomeIcon} alt="home" />
             </Link>
@@ -99,6 +105,7 @@ export const Layout = ({ children, backgroundImage }) => {
               rounded={"full"}
               variant={"link"}
               cursor={"pointer"}
+              mb={6}
             >
               <Avatar size={"sm"} />
             </MenuButton>
