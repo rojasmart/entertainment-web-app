@@ -16,7 +16,9 @@ export const MovieGrid = ({
 }) => {
   const navigate = useNavigate();
 
-  const moviesWithFlag = movies.map((movie) => ({ ...movie, isMovie: true }));
+  const moviesWithFlag = movies
+    ? movies.map((movie) => ({ ...movie, isMovie: true }))
+    : [];
   const tvSeriesWithFlag = tvSeries
     ? tvSeries.map((series) => ({ ...series, isMovie: false }))
     : [];
