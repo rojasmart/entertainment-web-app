@@ -14,7 +14,7 @@ export const Movies = () => {
   }, []);
 
   return (
-    <Layout>
+    <Layout isMoviePage={false}>
       <Container maxW={"100%"}>
         <SearchInput />
         <MovieGrid text="Movies" useScrollContainer={false} movies={movies} />

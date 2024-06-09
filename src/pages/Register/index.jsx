@@ -18,7 +18,7 @@ export function Register() {
     useCreateUserWithEmailAndPassword(auth);
 
   if (loading) {
-    return <p>carregando...</p>;
+    return <p>A carregar...</p>;
   }
 
   return (

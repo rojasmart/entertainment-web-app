@@ -10,7 +10,7 @@ export const MoviePage = () => {
   const movieBackground = `https://image.tmdb.org/t/p/original${item.backdrop_path}`;
 
   return (
-    <Layout backgroundImage={movieBackground}>
+    <Layout isMoviePage={true} backgroundImage={movieBackground}>
       <Container
         maxW={"900px"}
         display={"flex"}

@@ -5,7 +5,7 @@ import { MovieGrid } from "../pages/Components/MovieGrid";
 
 export const Bookmarks = () => {
   return (
-    <Layout>
+    <Layout isMoviePage={false}>
       <Container maxW={"100%"}>
         <SearchInput />
         <MovieGrid text="Bookmarks" useScrollContainer={false} />

@@ -6,7 +6,7 @@ import { MovieGrid } from "../pages/Components/MovieGrid";
 
 export const TvSeries = () => {
   return (
-    <Layout>
+    <Layout isMoviePage={false}>
       <Container maxW={"100%"}>
         <SearchInput />
         <MovieGrid text="TV Series" useScrollContainer={false} />
