@@ -18,6 +18,12 @@ import { SearchInput } from "../Components/SearchInput";
 import { MovieGrid } from "../Components/MovieGrid";
 import { getMoviesTrending, getMovies, getTVSeries } from "../../api/Auth";
 
+import Logo from "../../assets/logo.svg";
+import HomeIcon from "../../assets/icon-nav-home.svg";
+import MoviesIcon from "../../assets/icon-nav-movies.svg";
+import TvSeriesIcon from "../../assets/icon-nav-tv-series.svg";
+import BookmarkIcon from "../../assets/icon-nav-bookmark.svg";
+
 export const Layout = ({ children, backgroundImage }) => {
   const { signOut } = useContext(AuthContext); // Access signOut function from the context
   const handleLogout = () => {
@@ -73,17 +79,18 @@ export const Layout = ({ children, backgroundImage }) => {
           className="hello3"
         >
           <Box display={"flex"} flexDirection={"column"} gap={6}>
+            <img src={Logo} alt="Logo" />
             <Link to="/">
-              <Button>Home</Button>
+              <img src={HomeIcon} alt="home" />
             </Link>
             <Link to="/Movies">
-              <Button>Movies</Button>
+              <img src={MoviesIcon} alt="movies" />
             </Link>
             <Link to="/Tvseries">
-              <Button>TV Series</Button>
+              <img src={TvSeriesIcon} alt="tvseries" />
             </Link>
-            <Link to="/Bookmarks">
-              <Button>Bookmarks</Button>
+            <Link to="/Bookmark">
+              <img src={BookmarkIcon} alt="bookmark" />
             </Link>
           </Box>
           <Menu>
