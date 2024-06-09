@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Container } from "@chakra-ui/react";
-
 import { Layout } from "../pages/Home";
 import { SearchInput } from "../pages/Components/SearchInput";
 import { MovieGrid } from "../pages/Components/MovieGrid";
@@ -19,7 +18,11 @@ export const TvSeries = () => {
     <Layout isMoviePage={false}>
       <Container maxW={"100%"}>
         <SearchInput />
-        <MovieGrid text="TV Series" useScrollContainer={true} series={series} />
+        <MovieGrid
+          text="TV Series"
+          useScrollContainer={false}
+          series={series}
+        />
       </Container>
     </Layout>
   );

@@ -12,15 +12,17 @@ export const MovieGrid = ({
   useScrollContainer,
   trending,
   movies,
-  tvSeries,
+  series,
 }) => {
   const navigate = useNavigate();
+
+  console.log("series", series);
 
   const moviesWithFlag = movies
     ? movies.map((movie) => ({ ...movie, isMovie: true }))
     : [];
-  const tvSeriesWithFlag = tvSeries
-    ? tvSeries.map((series) => ({ ...series, isMovie: false }))
+  const tvSeriesWithFlag = series
+    ? series.map((series) => ({ ...series, isMovie: false }))
     : [];
 
   const allItems =
@@ -138,5 +140,5 @@ MovieGrid.propTypes = {
   useScrollContainer: propTypes.bool,
   trending: propTypes.array,
   movies: propTypes.array,
-  tvSeries: propTypes.array,
+  series: propTypes.array,
 };
