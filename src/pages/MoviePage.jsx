@@ -12,31 +12,31 @@ export const MoviePage = () => {
   return (
     <Layout backgroundImage={movieBackground}>
       <Container
-        maxW={"100%"}
+        maxW={"900px"}
         display={"flex"}
         justifyContent={"center"}
         alignItems={"center"}
         flexDirection={"column"}
       >
-        <Text mt={6} mb={6} color="white" fontSize={"4xl"}>
+        <Text
+          mt={14}
+          mb={8}
+          color="white"
+          fontSize={"7xl"}
+          alignSelf={"flex-start"}
+          fontWeight={"bold"}
+          ml={8}
+        >
           {item.title}
         </Text>
 
-        <video
-          width="800"
-          height="240"
-          style={{ borderRadius: "20px" }}
-          controls
-        >
-          <source src={item.videoUrl} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <Box maxW="825px" p={4} mt={2}>
+        <Box maxW="825px" p={4}>
           <List
             styleType="disc"
             display="flex"
             flexDirection="row"
             alignItems="flex-start"
+            mb={3}
           >
             <ListItem
               color={"white"}
@@ -52,7 +52,16 @@ export const MoviePage = () => {
               {item.isMovie ? "Movie" : "TV Series"}
             </ListItem>
           </List>
-          <Box p={4} bg="gray.700" borderRadius="md" mt={4}>
+          <video
+            width="800"
+            height="240"
+            style={{ borderRadius: "20px" }}
+            controls
+          >
+            <source src={item.videoUrl} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <Box borderRadius="md" mt={8}>
             <Text color="white" fontSize={"xl"}>
               {item.overview}
             </Text>

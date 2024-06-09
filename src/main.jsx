@@ -8,6 +8,7 @@ const theme = extendTheme({
     global: {
       body: {
         bg: "hsl(223, 30%, 9%)", // Change this to your desired color
+        fontFamily: "Outfit, sans-serif",
       },
     },
   },
