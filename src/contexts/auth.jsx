@@ -1,12 +1,17 @@
 import { useState, createContext, useEffect } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { app } from "../services/firebaseConfig";
+import { getFirestore } from "firebase/firestore";
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const auth = getAuth(app);
   const [user, setUser] = useState(null);
+
+  // Initialize Firestore
+  const db = getFirestore(app);
 
   useEffect(() => {
     const loadStorageData = () => {
@@ -18,6 +23,27 @@ export const AuthProvider = ({ children }) => {
     loadStorageData();
   }, []);
 
+  async function addUserWithBookmark(user, bookmark) {
+    try {
+      await setDoc(doc(db, "users", user.uid), {
+        bookmarks: [bookmark],
+      });
+    } catch (e) {
+      console.error("Error adding user with bookmark: ", e);
+    }
+  }
+
+  async function addBookmark(bookmark) {
+    try {
+      const userRef = doc(db, "users", user.uid);
+      await updateDoc(userRef, {
+        bookmarks: arrayUnion(bookmark),
+      });
+    } catch (e) {
+      console.error("Error adding bookmark: ", e);
+    }
+  }
+
   async function signInWithEmailPassword(email, password) {
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -28,6 +54,10 @@ export const AuthProvider = ({ children }) => {
       const user = userCredential.user;
       setUser(user);
       sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
+
+      // Add user with a bookmark to Firestore
+      const bookmark = { title: "My Bookmark", url: "https://example.com" };
+      addUserWithBookmark(user, bookmark);
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -49,6 +79,7 @@ export const AuthProvider = ({ children }) => {
         user,
         signInWithEmailPassword,
         signOut,
+        addBookmark,
       }}
     >
       {children}

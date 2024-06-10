@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import propTypes from "prop-types";
 
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,8 @@ import {
   Image,
   Button,
 } from "@chakra-ui/react";
+
+import { AuthContext } from "../../contexts/auth";
 
 import ScrollContainer from "react-indiana-drag-scroll";
 
@@ -42,6 +44,17 @@ export const MovieGrid = ({
     tvSeriesWithFlag.length > 0
       ? [...moviesWithFlag, ...tvSeriesWithFlag].sort(() => Math.random() - 0.5)
       : [...moviesWithFlag].sort(() => Math.random() - 0.5);
+
+  /* function BookmarkIcon({ item }) {
+    const { addBookmark } = useContext(AuthContext);
+
+    function handleClick() {
+      const bookmark = { title: item.title, url: "https://example.com" };
+      addBookmark(bookmark);
+    }
+
+    return <button onClick={handleClick}>Bookmark</button>;
+  } */
 
   return (
     <>
@@ -105,7 +118,12 @@ function MovieCard({ item }) {
   const [isBoxHovered, setIsBoxHovered] = useState(false);
 
   const navigate = useNavigate();
+  const { addBookmark } = useContext(AuthContext); // Get addBookmark from context
 
+  const handleBookmarkClick = () => {
+    const bookmark = { title: item.title, url: "https://example.com" };
+    addBookmark(bookmark);
+  };
   return (
     <>
       <Box>
@@ -153,6 +171,7 @@ function MovieCard({ item }) {
             cursor={"pointer"}
             onMouseEnter={() => setIsBoxHovered(true)}
             onMouseLeave={() => setIsBoxHovered(false)}
+            onClick={handleBookmarkClick}
           >
             <Image
               src={isBoxHovered ? BookmarkIconFull : BookmarkIconEmpty}
