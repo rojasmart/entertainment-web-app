@@ -20,6 +20,7 @@ export const SearchInput = ({ onSearch }) => {
           color={"white"}
           size={"md"}
           border="none"
+          borderBottom="1px solid transparent"
           borderRadius={"none"}
           _focusVisible={false}
           _focus={{
