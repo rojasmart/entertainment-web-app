@@ -2,9 +2,21 @@ import propTypes from "prop-types";
 
 import { useNavigate } from "react-router-dom";
 
-import { Grid, Box, Text, Flex, Card, List, ListItem } from "@chakra-ui/react";
+import {
+  Grid,
+  Box,
+  Text,
+  Flex,
+  Card,
+  List,
+  ListItem,
+  Img,
+} from "@chakra-ui/react";
 
 import ScrollContainer from "react-indiana-drag-scroll";
+
+import MoviesIcon from "../../assets/icon-nav-movies.svg";
+import TvSeriesIcon from "../../assets/icon-nav-tv-series.svg";
 
 export const MovieGrid = ({
   text,
@@ -15,8 +27,6 @@ export const MovieGrid = ({
   series,
 }) => {
   const navigate = useNavigate();
-
-  console.log("series", series);
 
   const moviesWithFlag = movies
     ? movies.map((movie) => ({ ...movie, isMovie: true }))
@@ -75,7 +85,7 @@ export const MovieGrid = ({
           </ScrollContainer>
         </>
       ) : null}
-      <Text color="white" fontSize={"3xl"}>
+      <Text mb={6} color="white" fontSize={"3xl"}>
         {text}
       </Text>
       <Grid templateColumns="repeat(4, 1fr)" gap={6}>
@@ -104,20 +114,31 @@ export const MovieGrid = ({
                   },
                 }}
               />
-              <Box as="div">
+              <Box as="div" mt={2}>
                 <List styleType="disc" display="flex" flexDirection="row">
                   <ListItem
                     color={"white"}
                     fontSize={"md"}
                     marginRight={6}
                     listStyleType="none"
+                    fontWeight={"100"}
                   >
                     {new Date(
                       item.isMovie ? item.release_date : item.first_air_date
                     ).getFullYear()}
                   </ListItem>
-                  <ListItem color={"white"} fontSize={"md"}>
-                    {item.isMovie ? "Movie" : "TV Series"}
+                  <ListItem color={"white"} fontSize={"md"} fontWeight={"100"}>
+                    {item.isMovie ? (
+                      <Flex align="center">
+                        <Img src={MoviesIcon} alt="movies" />
+                        <Text ml={2}>Movie</Text>
+                      </Flex>
+                    ) : (
+                      <Flex align="center">
+                        <Img src={TvSeriesIcon} alt="tvseries" />
+                        <Text ml={2}>TV Series</Text>
+                      </Flex>
+                    )}
                   </ListItem>
                 </List>
               </Box>

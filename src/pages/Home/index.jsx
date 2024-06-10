@@ -93,16 +93,16 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
           >
             <Img src={Logo} alt="Logo" mt={6} mb={12} />
             <Link to="/">
-              <img src={HomeIcon} alt="home" />
+              <Img src={HomeIcon} alt="home" />
             </Link>
             <Link to="/Movies">
-              <img src={MoviesIcon} alt="movies" />
+              <Img src={MoviesIcon} alt="movies" />
             </Link>
             <Link to="/Tvseries">
-              <img src={TvSeriesIcon} alt="tvseries" />
+              <Img src={TvSeriesIcon} alt="tvseries" />
             </Link>
             <Link to="/Bookmark">
-              <img src={BookmarkIcon} alt="bookmark" />
+              <Img src={BookmarkIcon} alt="bookmark" />
             </Link>
           </Box>
           <Menu>
