@@ -12,8 +12,6 @@ export const TvSeries = () => {
     getTVSeries().then((data) => setSeries(data.results));
   }, []);
 
-  console.log("series", series);
-
   return (
     <Layout isMoviePage={false}>
       <Container maxW={"100%"}>
@@ -21,7 +19,7 @@ export const TvSeries = () => {
         <MovieGrid
           text="TV Series"
           useScrollContainer={false}
-          series={series}
+          tvSeries={series}
         />
       </Container>
     </Layout>

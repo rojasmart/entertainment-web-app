@@ -30,7 +30,7 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
   const handleLogout = () => {
     signOut(); // Call signOut function
   };
-  console.log("isMoviePage", isMoviePage);
+
   return (
     <Box>
       <Flex>

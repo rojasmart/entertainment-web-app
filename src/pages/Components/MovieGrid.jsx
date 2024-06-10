@@ -13,7 +13,6 @@ import {
   ListItem,
   Image,
   Button,
-  Icon,
 } from "@chakra-ui/react";
 
 import ScrollContainer from "react-indiana-drag-scroll";
@@ -30,13 +29,13 @@ export const MovieGrid = ({
   useScrollContainer,
   trending,
   movies,
-  series,
+  tvSeries,
 }) => {
   const moviesWithFlag = movies
     ? movies.map((movie) => ({ ...movie, isMovie: true }))
     : [];
-  const tvSeriesWithFlag = series
-    ? series.map((series) => ({ ...series, isMovie: false }))
+  const tvSeriesWithFlag = tvSeries
+    ? tvSeries.map((series) => ({ ...series, isMovie: false }))
     : [];
 
   const allItems =
@@ -226,5 +225,5 @@ MovieGrid.propTypes = {
   useScrollContainer: propTypes.bool,
   trending: propTypes.array,
   movies: propTypes.array,
-  series: propTypes.array,
+  tvSeries: propTypes.array,
 };
