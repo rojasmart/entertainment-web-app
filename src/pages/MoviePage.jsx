@@ -27,7 +27,7 @@ export const MoviePage = () => {
           fontWeight={"bold"}
           ml={8}
         >
-          {item.title}
+          {item.title || item.original_name}
         </Text>
 
         <Box maxW="825px" p={4}>
