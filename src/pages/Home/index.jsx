@@ -10,7 +10,7 @@ import {
   Button,
   VStack,
   Container,
-  Img,
+  Image,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react"; // Import useContext hook from React
@@ -91,18 +91,18 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
             gap={6}
             alignItems={"center"}
           >
-            <Img src={Logo} alt="Logo" mt={6} mb={12} />
+            <Image src={Logo} alt="Logo" mt={6} mb={12} />
             <Link to="/">
-              <Img src={HomeIcon} alt="home" />
+              <Image src={HomeIcon} alt="home" />
             </Link>
             <Link to="/Movies">
-              <Img src={MoviesIcon} alt="movies" />
+              <Image src={MoviesIcon} alt="movies" />
             </Link>
             <Link to="/Tvseries">
-              <Img src={TvSeriesIcon} alt="tvseries" />
+              <Image src={TvSeriesIcon} alt="tvseries" />
             </Link>
             <Link to="/Bookmark">
-              <Img src={BookmarkIcon} alt="bookmark" />
+              <Image src={BookmarkIcon} alt="bookmark" />
             </Link>
           </Box>
           <Menu>

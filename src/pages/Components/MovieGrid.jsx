@@ -10,7 +10,7 @@ import {
   Card,
   List,
   ListItem,
-  Img,
+  Image,
 } from "@chakra-ui/react";
 
 import ScrollContainer from "react-indiana-drag-scroll";
@@ -130,12 +130,16 @@ export const MovieGrid = ({
                   <ListItem color={"white"} fontSize={"md"} fontWeight={"100"}>
                     {item.isMovie ? (
                       <Flex align="center">
-                        <Img src={MoviesIcon} alt="movies" />
+                        <Image src={MoviesIcon} alt="movies" boxSize="15px" />
                         <Text ml={2}>Movie</Text>
                       </Flex>
                     ) : (
                       <Flex align="center">
-                        <Img src={TvSeriesIcon} alt="tvseries" />
+                        <Image
+                          src={TvSeriesIcon}
+                          alt="tvseries"
+                          boxSize="15px"
+                        />
                         <Text ml={2}>TV Series</Text>
                       </Flex>
                     )}
