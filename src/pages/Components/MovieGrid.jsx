@@ -13,6 +13,7 @@ import {
   ListItem,
   Image,
   Button,
+  Icon,
 } from "@chakra-ui/react";
 
 import ScrollContainer from "react-indiana-drag-scroll";
@@ -21,6 +22,7 @@ import MoviesIcon from "../../assets/icon-nav-movies.svg";
 import TvSeriesIcon from "../../assets/icon-nav-tv-series.svg";
 import BookmarkIconEmpty from "../../assets/icon-bookmark-empty.svg";
 import BookmarkIconFull from "../../assets/icon-bookmark-full.svg";
+import IconPlay from "../../assets/icon-play.svg";
 
 export const MovieGrid = ({
   text,
@@ -166,10 +168,16 @@ function MovieCard({ item }) {
               transform="translate(-50%, -50%)"
               colorScheme="red"
               zIndex={9}
+              size={"lg"}
               cursor={"pointer"}
               onClick={() =>
                 navigate(`/Movies/${item.id}`, { state: { item } })
               }
+              leftIcon={<Image src={IconPlay} />}
+              sx={{
+                borderRadius: "full",
+              }}
+              w={"100px"}
             >
               Play
             </Button>
