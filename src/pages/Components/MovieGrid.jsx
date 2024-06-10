@@ -20,6 +20,7 @@ import ScrollContainer from "react-indiana-drag-scroll";
 import MoviesIcon from "../../assets/icon-nav-movies.svg";
 import TvSeriesIcon from "../../assets/icon-nav-tv-series.svg";
 import BookmarkIconEmpty from "../../assets/icon-bookmark-empty.svg";
+import BookmarkIconFull from "../../assets/icon-bookmark-full.svg";
 
 export const MovieGrid = ({
   text,
@@ -100,15 +101,13 @@ export const MovieGrid = ({
 
 function MovieCard({ item }) {
   const [isHovered, setIsHovered] = useState(false);
+  const [isBoxHovered, setIsBoxHovered] = useState(false);
 
   const navigate = useNavigate();
 
   return (
     <>
-      <Box
-        onClick={() => navigate(`/Movies/${item.id}`, { state: { item } })}
-        cursor={"pointer"}
-      >
+      <Box>
         <Card
           key={item.id}
           bg="white"
@@ -124,7 +123,20 @@ function MovieCard({ item }) {
             backgroundPosition: "center",
             transition: "transform .2s", // Add this line
             ":hover": {
-              transform: "scale(1.03)", // Add this line
+              "::after": {
+                content: '""',
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0, 0, 0, 0.5)", // semi-transparent black
+                opacity: 0,
+                transition: "opacity .2s",
+              },
+              ":hover::after": {
+                opacity: 1,
+              },
             },
           }}
         >
@@ -136,8 +148,15 @@ function MovieCard({ item }) {
             overflow="hidden"
             backgroundColor={"var(--semi-dark-blue)"}
             p={2}
+            zIndex={10}
+            cursor={"pointer"}
+            onMouseEnter={() => setIsBoxHovered(true)}
+            onMouseLeave={() => setIsBoxHovered(false)}
           >
-            <Image src={BookmarkIconEmpty} boxSize={3} />
+            <Image
+              src={isBoxHovered ? BookmarkIconFull : BookmarkIconEmpty}
+              boxSize={3}
+            />
           </Box>
           {isHovered && (
             <Button
@@ -146,6 +165,11 @@ function MovieCard({ item }) {
               left="50%"
               transform="translate(-50%, -50%)"
               colorScheme="red"
+              zIndex={9}
+              cursor={"pointer"}
+              onClick={() =>
+                navigate(`/Movies/${item.id}`, { state: { item } })
+              }
             >
               Play
             </Button>
