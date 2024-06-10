@@ -29,8 +29,6 @@ export const MovieGrid = ({
   movies,
   series,
 }) => {
-  const navigate = useNavigate();
-
   const moviesWithFlag = movies
     ? movies.map((movie) => ({ ...movie, isMovie: true }))
     : [];
@@ -43,7 +41,6 @@ export const MovieGrid = ({
       ? [...moviesWithFlag, ...tvSeriesWithFlag].sort(() => Math.random() - 0.5)
       : [...moviesWithFlag].sort(() => Math.random() - 0.5);
 
-  const [isHovered, setIsHovered] = useState(false);
   return (
     <>
       {useScrollContainer ? (
@@ -94,100 +91,102 @@ export const MovieGrid = ({
       </Text>
       <Grid templateColumns="repeat(4, 1fr)" gap={6}>
         {allItems.map((item) => (
-          <>
-            <Box
-              onClick={() =>
-                navigate(`/Movies/${item.id}`, { state: { item } })
-              }
-              cursor={"pointer"}
-            >
-              <Card
-                key={item.id}
-                bg="white"
-                height="280px"
-                borderRadius="md"
-                p={3}
-                minW="174px"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                sx={{
-                  backgroundImage: `url(https://image.tmdb.org/t/p/w500${item.backdrop_path})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  transition: "transform .2s", // Add this line
-                  ":hover": {
-                    transform: "scale(1.03)", // Add this line
-                  },
-                }}
-              >
-                <Box
-                  position="absolute"
-                  top={2}
-                  right={2}
-                  borderRadius="full"
-                  overflow="hidden"
-                  backgroundColor={"var(--semi-dark-blue)"}
-                  p={2}
-                >
-                  <Image src={BookmarkIconEmpty} boxSize={3} />
-                </Box>
-                {isHovered && (
-                  <Button
-                    position="absolute"
-                    top="50%"
-                    left="50%"
-                    transform="translate(-50%, -50%)"
-                    colorScheme="red"
-                  >
-                    Play
-                  </Button>
-                )}
-              </Card>
-
-              <Box as="div" mt={2}>
-                <List styleType="disc" display="flex" flexDirection="row">
-                  <ListItem
-                    color={"white"}
-                    fontSize={"md"}
-                    marginRight={6}
-                    listStyleType="none"
-                    fontWeight={"100"}
-                  >
-                    {new Date(
-                      item.isMovie ? item.release_date : item.first_air_date
-                    ).getFullYear()}
-                  </ListItem>
-                  <ListItem color={"white"} fontSize={"md"} fontWeight={"100"}>
-                    {item.isMovie ? (
-                      <Flex align="center">
-                        <Image src={MoviesIcon} alt="movies" boxSize="15px" />
-                        <Text ml={2}>Movie</Text>
-                      </Flex>
-                    ) : (
-                      <Flex align="center">
-                        <Image
-                          src={TvSeriesIcon}
-                          alt="tvseries"
-                          boxSize="15px"
-                        />
-                        <Text ml={2}>TV Series</Text>
-                      </Flex>
-                    )}
-                  </ListItem>
-                </List>
-              </Box>
-              <Text color={"white"} fontSize={"1xl"}>
-                {item.isMovie ? item.title : item.original_name}
-              </Text>
-            </Box>
-          </>
+          <MovieCard key={item.id} item={item} />
         ))}
-
-        {/* Add more cards as needed */}
       </Grid>
     </>
   );
 };
+
+function MovieCard({ item }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const navigate = useNavigate();
+
+  return (
+    <>
+      <Box
+        onClick={() => navigate(`/Movies/${item.id}`, { state: { item } })}
+        cursor={"pointer"}
+      >
+        <Card
+          key={item.id}
+          bg="white"
+          height="280px"
+          borderRadius="md"
+          p={3}
+          minW="174px"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          sx={{
+            backgroundImage: `url(https://image.tmdb.org/t/p/w500${item.backdrop_path})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            transition: "transform .2s", // Add this line
+            ":hover": {
+              transform: "scale(1.03)", // Add this line
+            },
+          }}
+        >
+          <Box
+            position="absolute"
+            top={2}
+            right={2}
+            borderRadius="full"
+            overflow="hidden"
+            backgroundColor={"var(--semi-dark-blue)"}
+            p={2}
+          >
+            <Image src={BookmarkIconEmpty} boxSize={3} />
+          </Box>
+          {isHovered && (
+            <Button
+              position="absolute"
+              top="50%"
+              left="50%"
+              transform="translate(-50%, -50%)"
+              colorScheme="red"
+            >
+              Play
+            </Button>
+          )}
+        </Card>
+
+        <Box as="div" mt={2}>
+          <List styleType="disc" display="flex" flexDirection="row">
+            <ListItem
+              color={"white"}
+              fontSize={"md"}
+              marginRight={6}
+              listStyleType="none"
+              fontWeight={"100"}
+            >
+              {new Date(
+                item.isMovie ? item.release_date : item.first_air_date
+              ).getFullYear()}
+            </ListItem>
+            <ListItem color={"white"} fontSize={"md"} fontWeight={"100"}>
+              {item.isMovie ? (
+                <Flex align="center">
+                  <Image src={MoviesIcon} alt="movies" boxSize="15px" />
+                  <Text ml={2}>Movie</Text>
+                </Flex>
+              ) : (
+                <Flex align="center">
+                  <Image src={TvSeriesIcon} alt="tvseries" boxSize="15px" />
+                  <Text ml={2}>TV Series</Text>
+                </Flex>
+              )}
+            </ListItem>
+          </List>
+        </Box>
+        <Text color={"white"} fontSize={"1xl"}>
+          {item.isMovie ? item.title : item.original_name}
+        </Text>
+      </Box>
+    </>
+  );
+}
 
 MovieGrid.propTypes = {
   text: propTypes.string,
