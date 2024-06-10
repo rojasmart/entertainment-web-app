@@ -15,11 +15,16 @@ export const SearchInput = ({ onSearch }) => {
           <SearchIcon color="gray.300" size={"lg"} />
         </InputLeftElement>
         <Input
-          placeholder="search title movie"
+          placeholder="Search for movies or TV series"
           onChange={handleInputChange}
           color={"white"}
-          size={"lg"}
+          size={"md"}
           border="none"
+          borderRadius={"none"}
+          _focusVisible={false}
+          _focus={{
+            borderBottom: "1px solid white",
+          }}
         />
       </InputGroup>
     </Stack>
