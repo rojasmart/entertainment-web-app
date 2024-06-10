@@ -1,3 +1,4 @@
+import { useState } from "react";
 import propTypes from "prop-types";
 
 import { useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ import {
   List,
   ListItem,
   Image,
+  Button,
 } from "@chakra-ui/react";
 
 import ScrollContainer from "react-indiana-drag-scroll";
@@ -41,6 +43,7 @@ export const MovieGrid = ({
       ? [...moviesWithFlag, ...tvSeriesWithFlag].sort(() => Math.random() - 0.5)
       : [...moviesWithFlag].sort(() => Math.random() - 0.5);
 
+  const [isHovered, setIsHovered] = useState(false);
   return (
     <>
       {useScrollContainer ? (
@@ -105,6 +108,8 @@ export const MovieGrid = ({
                 borderRadius="md"
                 p={3}
                 minW="174px"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
                 sx={{
                   backgroundImage: `url(https://image.tmdb.org/t/p/w500${item.backdrop_path})`,
                   backgroundSize: "cover",
@@ -115,9 +120,28 @@ export const MovieGrid = ({
                   },
                 }}
               >
-                <Box position="absolute" top={2} right={2}>
-                  <Image src={BookmarkIconEmpty} boxSize={6} />
+                <Box
+                  position="absolute"
+                  top={2}
+                  right={2}
+                  borderRadius="full"
+                  overflow="hidden"
+                  backgroundColor={"var(--semi-dark-blue)"}
+                  p={2}
+                >
+                  <Image src={BookmarkIconEmpty} boxSize={3} />
                 </Box>
+                {isHovered && (
+                  <Button
+                    position="absolute"
+                    top="50%"
+                    left="50%"
+                    transform="translate(-50%, -50%)"
+                    colorScheme="red"
+                  >
+                    Play
+                  </Button>
+                )}
               </Card>
 
               <Box as="div" mt={2}>
