@@ -17,6 +17,7 @@ import ScrollContainer from "react-indiana-drag-scroll";
 
 import MoviesIcon from "../../assets/icon-nav-movies.svg";
 import TvSeriesIcon from "../../assets/icon-nav-tv-series.svg";
+import BookmarkIconEmpty from "../../assets/icon-bookmark-empty.svg";
 
 export const MovieGrid = ({
   text,
@@ -113,7 +114,12 @@ export const MovieGrid = ({
                     transform: "scale(1.03)", // Add this line
                   },
                 }}
-              />
+              >
+                <Box position="absolute" top={2} right={2}>
+                  <Image src={BookmarkIconEmpty} boxSize={6} />
+                </Box>
+              </Card>
+
               <Box as="div" mt={2}>
                 <List styleType="disc" display="flex" flexDirection="row">
                   <ListItem
