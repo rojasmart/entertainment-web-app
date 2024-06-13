@@ -1,6 +1,13 @@
 import { useState, createContext, useEffect } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  getDoc,
+} from "firebase/firestore";
 import { app } from "../services/firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 
@@ -63,6 +70,17 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  async function removeBookmark(bookmark) {
+    try {
+      const userRef = doc(db, "users", user.uid);
+      await updateDoc(userRef, {
+        bookmarks: arrayRemove(bookmark),
+      });
+    } catch (e) {
+      console.error("Error removing bookmark: ", e);
+    }
+  }
+
   async function signInWithEmailPassword(email, password) {
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -99,6 +117,7 @@ export const AuthProvider = ({ children }) => {
         signInWithEmailPassword,
         signOut,
         addBookmark,
+        removeBookmark,
         fetchBookmarks,
       }}
     >

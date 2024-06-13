@@ -32,6 +32,7 @@ export const MovieGrid = ({
   trending,
   movies,
   tvSeries,
+  isBookmarked,
 }) => {
   const moviesWithFlag = movies
     ? movies.map((movie) => ({ ...movie, isMovie: true }))
@@ -95,26 +96,30 @@ export const MovieGrid = ({
       </Text>
       <Grid templateColumns="repeat(4, 1fr)" gap={6}>
         {allItems.map((item) => (
-          <MovieCard key={item.id} item={item} />
+          <MovieCard key={item.id} item={item} isBookmarked={isBookmarked} />
         ))}
       </Grid>
     </>
   );
 };
 
-function MovieCard({ item }) {
+function MovieCard({ item, isBookmarked }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isBoxHovered, setIsBoxHovered] = useState(false);
 
   const navigate = useNavigate();
-  const { addBookmark } = useContext(AuthContext); // Get addBookmark from context
+  const { addBookmark, removeBookmark } = useContext(AuthContext); // Get addBookmark from context
 
   const handleBookmarkClick = () => {
-    const bookmark = {
-      id: item.id,
-      title: item.title,
-    };
-    addBookmark(bookmark);
+    if (isBookmarked) {
+      removeBookmark(item);
+    } else {
+      const bookmark = {
+        id: item.id,
+        title: item.title,
+      };
+      addBookmark(bookmark);
+    }
   };
 
   return (

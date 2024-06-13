@@ -42,6 +42,7 @@ export const Bookmarks = () => {
           text="Bookmarks"
           movies={bookmarkedMovies}
           useScrollContainer={false}
+          isBookmarked={true}
         />
       </Container>
     </Layout>
