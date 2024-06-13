@@ -45,17 +45,6 @@ export const MovieGrid = ({
       ? [...moviesWithFlag, ...tvSeriesWithFlag].sort(() => Math.random() - 0.5)
       : [...moviesWithFlag].sort(() => Math.random() - 0.5);
 
-  /* function BookmarkIcon({ item }) {
-    const { addBookmark } = useContext(AuthContext);
-
-    function handleClick() {
-      const bookmark = { title: item.title, url: "https://example.com" };
-      addBookmark(bookmark);
-    }
-
-    return <button onClick={handleClick}>Bookmark</button>;
-  } */
-
   return (
     <>
       {useScrollContainer ? (
@@ -121,9 +110,13 @@ function MovieCard({ item }) {
   const { addBookmark } = useContext(AuthContext); // Get addBookmark from context
 
   const handleBookmarkClick = () => {
-    const bookmark = { title: item.title, url: "https://example.com" };
+    const bookmark = {
+      id: item.id,
+      title: item.title,
+    };
     addBookmark(bookmark);
   };
+
   return (
     <>
       <Box>

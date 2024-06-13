@@ -1,6 +1,6 @@
 import { useState, createContext, useEffect } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, setDoc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
 import { app } from "../services/firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 
@@ -22,6 +22,25 @@ export const AuthProvider = ({ children }) => {
     };
     loadStorageData();
   }, []);
+
+  async function fetchBookmarks() {
+    if (!user) {
+      console.error("No user signed in");
+      return;
+    }
+    try {
+      const userRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        const { bookmarks } = docSnap.data();
+        return bookmarks; // Or update state with bookmarks
+      } else {
+        console.log("No such document!");
+      }
+    } catch (e) {
+      console.error("Error fetching bookmarks: ", e);
+    }
+  }
 
   async function addUserWithBookmark(user, bookmark) {
     try {
@@ -80,6 +99,7 @@ export const AuthProvider = ({ children }) => {
         signInWithEmailPassword,
         signOut,
         addBookmark,
+        fetchBookmarks,
       }}
     >
       {children}

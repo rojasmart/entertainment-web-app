@@ -101,7 +101,7 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
             <Link to="/Tvseries">
               <Image src={TvSeriesIcon} alt="tvseries" />
             </Link>
-            <Link to="/Bookmark">
+            <Link to="/Bookmarks">
               <Image src={BookmarkIcon} alt="bookmark" />
             </Link>
           </Box>
