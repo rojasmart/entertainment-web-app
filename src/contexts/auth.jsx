@@ -49,16 +49,6 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  async function addUserWithBookmark(user, bookmark) {
-    try {
-      await setDoc(doc(db, "users", user.uid), {
-        bookmarks: [bookmark],
-      });
-    } catch (e) {
-      console.error("Error adding user with bookmark: ", e);
-    }
-  }
-
   async function addBookmark(bookmark) {
     try {
       const userRef = doc(db, "users", user.uid);

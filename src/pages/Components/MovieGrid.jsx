@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import propTypes from "prop-types";
 
 import { useNavigate } from "react-router-dom";
@@ -106,14 +106,26 @@ export const MovieGrid = ({
 function MovieCard({ item, isBookmarked }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isBoxHovered, setIsBoxHovered] = useState(false);
+  const [bookmarks, setBookmarks] = useState([]);
 
   const navigate = useNavigate();
-  const { addBookmark, removeBookmark } = useContext(AuthContext); // Get addBookmark from context
+  const {
+    addBookmark,
+    removeBookmark,
+    bookmarks: contextBookmarks,
+  } = useContext(AuthContext); // Get addBookmark from context
+
+  useEffect(() => {
+    // Synchronize local state with context
+    setBookmarks(contextBookmarks);
+  }, [contextBookmarks]); // Depend on contextBookmarks to re-run when it changes
 
   const handleBookmarkClick = () => {
     if (isBookmarked) {
-      removeBookmark(item);
+      console.log("remove bookmark", item);
+      removeBookmark(item.id);
     } else {
+      console.log("add bookmark");
       const bookmark = {
         id: item.id,
         title: item.title,
