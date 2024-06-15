@@ -61,8 +61,10 @@ export const AuthProvider = ({ children }) => {
   }
 
   async function removeBookmark(bookmark) {
+    console.log("remove bookmark 1 ", bookmark);
     try {
       const userRef = doc(db, "users", user.uid);
+      console.log("remove bookmark 2", bookmark);
       await updateDoc(userRef, {
         bookmarks: arrayRemove(bookmark),
       });

@@ -121,8 +121,11 @@ function MovieCard({ item, isBookmarked }) {
 
   const handleBookmarkClick = () => {
     if (isBookmarked) {
-      console.log("remove bookmark", item);
-      removeBookmark(item.id);
+      const bookmark = {
+        id: item.id,
+        title: item.title || item.original_name,
+      };
+      removeBookmark(bookmark);
     } else {
       console.log("add bookmark");
       const bookmark = {
