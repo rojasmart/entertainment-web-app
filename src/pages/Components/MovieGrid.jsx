@@ -24,7 +24,6 @@ import TvSeriesIcon from "../../assets/icon-nav-tv-series.svg";
 import BookmarkIconEmpty from "../../assets/icon-bookmark-empty.svg";
 import BookmarkIconFull from "../../assets/icon-bookmark-full.svg";
 import IconPlay from "../../assets/icon-play.svg";
-import { connectStorageEmulator } from "firebase/storage";
 
 export const MovieGrid = ({
   text,
@@ -46,7 +45,6 @@ export const MovieGrid = ({
     tvSeriesWithFlag.length > 0
       ? [...moviesWithFlag, ...tvSeriesWithFlag].sort(() => Math.random() - 0.5)
       : [...moviesWithFlag].sort(() => Math.random() - 0.5);
-
   return (
     <>
       {useScrollContainer ? (

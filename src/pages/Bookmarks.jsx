@@ -14,6 +14,7 @@ export const Bookmarks = () => {
   const [movies, setMovies] = useState([]);
   const [series, setSeries] = useState([]);
   const [bookmarkedMovies, setBookmarkedMovies] = useState([]);
+  const [bookmarkedSeries, setBookmarkedSeries] = useState([]);
 
   const { fetchBookmarks } = useContext(AuthContext);
 
@@ -36,7 +37,8 @@ export const Bookmarks = () => {
         bookmarkIds.includes(serie.id)
       );
 
-      setBookmarkedMovies([...filteredMovies, ...filteredSeries]);
+      setBookmarkedMovies(filteredMovies);
+      setBookmarkedSeries(filteredSeries);
     };
 
     fetchAndSetData();
@@ -49,6 +51,7 @@ export const Bookmarks = () => {
         <MovieGrid
           text="Bookmarks"
           movies={bookmarkedMovies}
+          tvSeries={bookmarkedSeries}
           useScrollContainer={false}
           isBookmarked={true}
         />
