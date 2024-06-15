@@ -24,6 +24,7 @@ import TvSeriesIcon from "../../assets/icon-nav-tv-series.svg";
 import BookmarkIconEmpty from "../../assets/icon-bookmark-empty.svg";
 import BookmarkIconFull from "../../assets/icon-bookmark-full.svg";
 import IconPlay from "../../assets/icon-play.svg";
+import { connectStorageEmulator } from "firebase/storage";
 
 export const MovieGrid = ({
   text,
@@ -128,8 +129,9 @@ function MovieCard({ item, isBookmarked }) {
       console.log("add bookmark");
       const bookmark = {
         id: item.id,
-        title: item.title,
+        title: item.title || item.original_name,
       };
+      console.log("bookmark", bookmark);
       addBookmark(bookmark);
     }
   };
