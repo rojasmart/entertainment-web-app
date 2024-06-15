@@ -2,7 +2,6 @@ import { useState, createContext, useEffect } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import {
   doc,
-  setDoc,
   updateDoc,
   arrayUnion,
   arrayRemove,
@@ -14,6 +13,9 @@ import { getFirestore } from "firebase/firestore";
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
+  const [signed, setSigned] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const auth = getAuth(app);
   const [user, setUser] = useState(null);
 
@@ -28,6 +30,12 @@ export const AuthProvider = ({ children }) => {
       }
     };
     loadStorageData();
+  }, []);
+
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+    setSigned(isAuthenticated);
+    setLoading(false);
   }, []);
 
   async function fetchBookmarks() {
@@ -113,7 +121,7 @@ export const AuthProvider = ({ children }) => {
         fetchBookmarks,
       }}
     >
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
