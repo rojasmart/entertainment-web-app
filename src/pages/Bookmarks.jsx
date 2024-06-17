@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Container, filter } from "@chakra-ui/react";
 import { Layout } from "../pages/Home";
 import { SearchInput } from "../pages/Components/SearchInput";
@@ -8,6 +8,7 @@ import { AuthContext } from "../contexts/auth";
 
 import { getMovies } from "../api/Auth";
 import { getTVSeries } from "../api/Auth";
+import { set } from "firebase/database";
 
 export const Bookmarks = () => {
   const [bookmarks, setBookmarks] = useState([]);
@@ -15,6 +16,11 @@ export const Bookmarks = () => {
   const [series, setSeries] = useState([]);
   const [bookmarkedMovies, setBookmarkedMovies] = useState([]);
   const [bookmarkedSeries, setBookmarkedSeries] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = useCallback((term) => {
+    setSearchTerm(term);
+  }, []);
 
   const { fetchBookmarks } = useContext(AuthContext);
 
@@ -44,14 +50,26 @@ export const Bookmarks = () => {
     fetchAndSetData();
   }, [fetchBookmarks]);
 
+  const filteredMovies = useCallback(() => {
+    return bookmarkedMovies.filter((movie) =>
+      movie.title?.toLowerCase().includes(searchTerm?.toLowerCase() || "")
+    );
+  }, [bookmarkedMovies, searchTerm]);
+
+  const filteredSeries = useCallback(() => {
+    return bookmarkedSeries.filter((serie) =>
+      serie.title?.toLowerCase().includes(searchTerm?.toLowerCase() || "")
+    );
+  }, [bookmarkedSeries, searchTerm]);
+
   return (
     <Layout isMoviePage={false}>
       <Container maxW={"100%"}>
-        <SearchInput />
+        <SearchInput onSearch={handleSearch} />
         <MovieGrid
           text="Bookmarks"
-          movies={bookmarkedMovies}
-          tvSeries={bookmarkedSeries}
+          movies={filteredMovies()}
+          tvSeries={filteredSeries()}
           useScrollContainer={false}
           isBookmarked={true}
         />

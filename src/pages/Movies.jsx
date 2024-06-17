@@ -8,7 +8,6 @@ import { getMovies } from "../api/Auth";
 
 export const Movies = () => {
   const [movies, setMovies] = useState([]);
-
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = useCallback((term) => {
