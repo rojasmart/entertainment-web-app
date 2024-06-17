@@ -92,8 +92,6 @@ export const AuthProvider = ({ children }) => {
       setUser(user);
       sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
 
-      // Add user with a bookmark to Firestore
-      //const bookmark = { title: "My Bookmark", url: "https://example.com" };
       //addUserWithBookmark(user, bookmark);
     } catch (error) {
       const errorCode = error.code;

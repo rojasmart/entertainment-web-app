@@ -125,7 +125,13 @@ function MovieCard({ item, isBookmarked }) {
         id: item.id,
         title: item.title || item.original_name,
       };
-      removeBookmark(bookmark);
+      removeBookmark(bookmark)
+        .then(() => {
+          navigate(0);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
     } else {
       console.log("add bookmark");
       const bookmark = {
