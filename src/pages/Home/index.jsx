@@ -8,7 +8,7 @@ import {
   MenuList,
   MenuItem,
   Button,
-  VStack,
+  Stack,
   Container,
   Image,
 } from "@chakra-ui/react";
@@ -71,27 +71,34 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
             ></div>
           </>
         )}
-        <VStack
+        <Stack
           as="nav"
+          direction={{ base: "row", md: "column" }}
           bg="gray.200"
           p={2}
-          width="96px"
+          width={{ base: "full", md: "96px" }}
           justifyContent="space-between"
           alignItems="center"
           spacing={4}
-          height={"90vh"}
+          height={{ base: "80px", md: "90vh" }}
           borderRadius={"20px"}
           m={6}
           backgroundColor="var(--semi-dark-blue)"
           className="hello3"
+          overflowX="auto"
         >
           <Box
             display={"flex"}
-            flexDirection={"column"}
+            flexDirection={{ base: "row", md: "column" }}
             gap={6}
             alignItems={"center"}
           >
-            <Image src={Logo} alt="Logo" mt={6} mb={12} />
+            <Image
+              src={Logo}
+              alt="Logo"
+              mt={{ base: 0, md: 6 }}
+              mb={{ base: 0, md: 12 }}
+            />
             <Link to="/">
               <Image src={HomeIcon} alt="home" />
             </Link>
@@ -111,7 +118,7 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
               rounded={"full"}
               variant={"link"}
               cursor={"pointer"}
-              mb={6}
+              mb={{ base: 0, md: 6 }}
             >
               <Avatar size={"sm"} />
             </MenuButton>
@@ -121,7 +128,7 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
               <MenuItem onClick={handleLogout}>Log out</MenuItem>
             </MenuList>
           </Menu>
-        </VStack>
+        </Stack>
         <Box flex="1" overflowY="auto">
           {children}
         </Box>
