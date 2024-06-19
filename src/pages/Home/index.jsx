@@ -194,8 +194,8 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
             as="nav"
             direction={{ base: "row", md: "column" }}
             bg="gray.200"
-            p={2}
-            width={{ base: "full", md: "96px" }}
+            p={4}
+            width={{ base: "auto", md: "96px" }}
             justifyContent="space-between"
             alignItems="center"
             spacing={4}
