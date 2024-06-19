@@ -25,114 +25,233 @@ import MoviesIcon from "../../assets/icon-nav-movies.svg";
 import TvSeriesIcon from "../../assets/icon-nav-tv-series.svg";
 import BookmarkIcon from "../../assets/icon-nav-bookmark.svg";
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return isMobile;
+}
+
 export const Layout = ({ children, backgroundImage, isMoviePage }) => {
   const { signOut } = useContext(AuthContext); // Access signOut function from the context
   const handleLogout = () => {
     signOut(); // Call signOut function
   };
 
+  const isMobile = useIsMobile();
+
   return (
     <Box>
-      <Flex>
-        {isMoviePage && (
-          <>
-            <Box
-              style={{
-                backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
-                backgroundSize: "cover", // Cover the entire space
-                backgroundRepeat: "no-repeat", // Do not repeat the image
-                filter: "blur(10px)", // Add a blur filter
-                position: "absolute",
-                top: 0,
-                left: 0,
-                height: "100vh",
-                width: "100%",
-                zIndex: "-1",
-                opacity: 0.5, // Adjust the opacity as needed
-                backgroundColor: "black",
-              }}
-            ></Box>
+      {!isMobile && (
+        <Flex>
+          {isMoviePage && (
+            <>
+              <Box
+                style={{
+                  backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
+                  backgroundSize: "cover", // Cover the entire space
+                  backgroundRepeat: "no-repeat", // Do not repeat the image
+                  filter: "blur(10px)", // Add a blur filter
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  height: "100vh",
+                  width: "100%",
+                  zIndex: "-1",
+                  opacity: 0.5, // Adjust the opacity as needed
+                  backgroundColor: "black",
+                }}
+              ></Box>
 
-            <div
-              style={{
-                backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
-                backgroundSize: "cover", // Cover the entire space
-                backgroundRepeat: "no-repeat", // Do not repeat the image
-                filter: "blur(10px)", // Add a blur filter
-                position: "absolute",
-                top: 0,
-                left: 0,
-                height: "100vh",
-                width: "100%",
-                zIndex: "-1",
-                opacity: 0.5, // Adjust the opacity as needed
-                backgroundColor: "black",
-              }}
-            ></div>
-          </>
-        )}
-        <Stack
-          as="nav"
-          direction={{ base: "row", md: "column" }}
-          bg="gray.200"
-          p={2}
-          width={{ base: "full", md: "96px" }}
-          justifyContent="space-between"
-          alignItems="center"
-          spacing={4}
-          height={{ base: "80px", md: "90vh" }}
-          borderRadius={"20px"}
-          m={6}
-          backgroundColor="var(--semi-dark-blue)"
-          className="hello3"
-          overflowX="auto"
-        >
-          <Box
-            display={"flex"}
-            flexDirection={{ base: "row", md: "column" }}
-            gap={6}
-            alignItems={"center"}
+              <div
+                style={{
+                  backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
+                  backgroundSize: "cover", // Cover the entire space
+                  backgroundRepeat: "no-repeat", // Do not repeat the image
+                  filter: "blur(10px)", // Add a blur filter
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  height: "100vh",
+                  width: "100%",
+                  zIndex: "-1",
+                  opacity: 0.5, // Adjust the opacity as needed
+                  backgroundColor: "black",
+                }}
+              ></div>
+            </>
+          )}
+          <Stack
+            as="nav"
+            direction={{ base: "row", md: "column" }}
+            bg="gray.200"
+            p={2}
+            width={{ base: "full", md: "96px" }}
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={4}
+            height={{ base: "80px", md: "90vh" }}
+            borderRadius={"20px"}
+            m={6}
+            backgroundColor="var(--semi-dark-blue)"
+            overflowX="auto"
           >
-            <Image
-              src={Logo}
-              alt="Logo"
-              mt={{ base: 0, md: 6 }}
-              mb={{ base: 0, md: 12 }}
-            />
-            <Link to="/">
-              <Image src={HomeIcon} alt="home" />
-            </Link>
-            <Link to="/Movies">
-              <Image src={MoviesIcon} alt="movies" />
-            </Link>
-            <Link to="/Tvseries">
-              <Image src={TvSeriesIcon} alt="tvseries" />
-            </Link>
-            <Link to="/Bookmarks">
-              <Image src={BookmarkIcon} alt="bookmark" />
-            </Link>
-          </Box>
-          <Menu>
-            <MenuButton
-              as={Button}
-              rounded={"full"}
-              variant={"link"}
-              cursor={"pointer"}
-              mb={{ base: 0, md: 6 }}
+            <Box
+              display={"flex"}
+              flexDirection={{ base: "row", md: "column" }}
+              gap={6}
+              alignItems={"center"}
             >
-              <Avatar size={"sm"} />
-            </MenuButton>
-            <MenuList>
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem onClick={handleLogout}>Log out</MenuItem>
-            </MenuList>
-          </Menu>
-        </Stack>
-        <Box flex="1" overflowY="auto">
-          {children}
-        </Box>
-      </Flex>
+              <Image
+                src={Logo}
+                alt="Logo"
+                mt={{ base: 0, md: 6 }}
+                mb={{ base: 0, md: 12 }}
+              />
+              <Link to="/">
+                <Image src={HomeIcon} alt="home" />
+              </Link>
+              <Link to="/Movies">
+                <Image src={MoviesIcon} alt="movies" />
+              </Link>
+              <Link to="/Tvseries">
+                <Image src={TvSeriesIcon} alt="tvseries" />
+              </Link>
+              <Link to="/Bookmarks">
+                <Image src={BookmarkIcon} alt="bookmark" />
+              </Link>
+            </Box>
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={"full"}
+                variant={"link"}
+                cursor={"pointer"}
+                mb={{ base: 0, md: 6 }}
+              >
+                <Avatar size={"sm"} />
+              </MenuButton>
+              <MenuList>
+                <MenuItem>Profile</MenuItem>
+                <MenuItem>Settings</MenuItem>
+                <MenuItem onClick={handleLogout}>Log out</MenuItem>
+              </MenuList>
+            </Menu>
+          </Stack>
+          <Box flex="1" overflowY="auto">
+            {children}
+          </Box>
+        </Flex>
+      )}
+      {isMobile && (
+        <>
+          {isMoviePage && (
+            <>
+              <Box
+                style={{
+                  backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
+                  backgroundSize: "cover", // Cover the entire space
+                  backgroundRepeat: "no-repeat", // Do not repeat the image
+                  filter: "blur(10px)", // Add a blur filter
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  height: "100vh",
+                  width: "100%",
+                  zIndex: "-1",
+                  opacity: 0.5, // Adjust the opacity as needed
+                  backgroundColor: "black",
+                }}
+              ></Box>
+
+              <div
+                style={{
+                  backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
+                  backgroundSize: "cover", // Cover the entire space
+                  backgroundRepeat: "no-repeat", // Do not repeat the image
+                  filter: "blur(10px)", // Add a blur filter
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  height: "100vh",
+                  width: "100%",
+                  zIndex: "-1",
+                  opacity: 0.5, // Adjust the opacity as needed
+                  backgroundColor: "black",
+                }}
+              ></div>
+            </>
+          )}
+          <Stack
+            as="nav"
+            direction={{ base: "row", md: "column" }}
+            bg="gray.200"
+            p={2}
+            width={{ base: "full", md: "96px" }}
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={4}
+            height={{ base: "80px", md: "90vh" }}
+            borderRadius={"20px"}
+            m={6}
+            backgroundColor="var(--semi-dark-blue)"
+            overflowX="auto"
+          >
+            <Box
+              display={"flex"}
+              flexDirection={{ base: "row", md: "column" }}
+              gap={6}
+              alignItems={"center"}
+            >
+              <Image
+                src={Logo}
+                alt="Logo"
+                mt={{ base: 0, md: 6 }}
+                mb={{ base: 0, md: 12 }}
+              />
+              <Link to="/">
+                <Image src={HomeIcon} alt="home" />
+              </Link>
+              <Link to="/Movies">
+                <Image src={MoviesIcon} alt="movies" />
+              </Link>
+              <Link to="/Tvseries">
+                <Image src={TvSeriesIcon} alt="tvseries" />
+              </Link>
+              <Link to="/Bookmarks">
+                <Image src={BookmarkIcon} alt="bookmark" />
+              </Link>
+            </Box>
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={"full"}
+                variant={"link"}
+                cursor={"pointer"}
+                mb={{ base: 0, md: 6 }}
+              >
+                <Avatar size={"sm"} />
+              </MenuButton>
+              <MenuList>
+                <MenuItem>Profile</MenuItem>
+                <MenuItem>Settings</MenuItem>
+                <MenuItem onClick={handleLogout}>Log out</MenuItem>
+              </MenuList>
+            </Menu>
+          </Stack>
+          <Box flex="1" overflowY="auto">
+            {children}
+          </Box>
+        </>
+      )}
     </Box>
   );
 };
