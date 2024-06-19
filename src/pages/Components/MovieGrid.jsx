@@ -93,7 +93,16 @@ export const MovieGrid = ({
       <Text mb={6} color="white" fontSize={"3xl"}>
         {text}
       </Text>
-      <Grid templateColumns="repeat(4, 1fr)" gap={6}>
+      <Grid
+        templateColumns={{
+          base: "repeat(1, 1fr)", // Mobile
+          sm: "repeat(2, 1fr)", // Small screens
+          md: "repeat(3, 1fr)", // Medium screens
+          lg: "repeat(4, 1fr)", // Large screens
+          xl: "repeat(5, 1fr)", // Extra large screens
+        }}
+        gap={6}
+      >
         {allItems.map((item) => (
           <MovieCard key={item.id} item={item} isBookmarked={isBookmarked} />
         ))}
