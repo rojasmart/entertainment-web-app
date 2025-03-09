@@ -1,12 +1,13 @@
-# Frontend Mentor - Entertainment web app solution
+# Entertainment web app
 
-This is a solution to the [Entertainment Web App Solution](https://www.frontendmentor.io/challenges/entertainment-web-app-J-UhgAW1X).
+![image](https://github.com/user-attachments/assets/29250ff7-9b6c-4132-859c-6f5414e1adf9)
+
 
 I created this project as a Fullstack App.
 
 ### Built with
 
-- React 18
+- React v18
 - Chakra UI
 - Formik
 - Firebase
