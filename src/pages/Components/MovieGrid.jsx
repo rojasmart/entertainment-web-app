@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import propTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { Grid, Box, Text, Flex, Card, List, ListItem, Image, Button } from "@chakra-ui/react";
+import { Grid, Box, Text, Flex, Card, List, ListItem, Image, Button, useToast } from "@chakra-ui/react";
 import { AuthContext } from "../../contexts/auth";
 import ScrollContainer from "react-indiana-drag-scroll";
 import MoviesIcon from "../../assets/icon-nav-movies.svg";
@@ -16,26 +16,90 @@ export function MovieCard({ item, isBookmarked, onToggleBookmark }) {
   const [isBoxHovered, setIsBoxHovered] = useState(false);
   const { bookmarks, addBookmark, removeBookmark } = useContext(AuthContext);
 
+  const toast = useToast();
+
   const navigate = useNavigate();
   const isItemBookmarked = bookmarks?.some((bookmark) => bookmark.id === item.id);
 
+  const showAddedToast = (title) => {
+    toast({
+      title: "Bookmark Added",
+      description: `${title} has been added to your bookmarks`,
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      position: "top",
+      variant: "solid",
+    });
+  };
+
+  const showRemovedToast = (title) => {
+    toast({
+      title: "Bookmark Removed",
+      description: `${title} has been removed from your bookmarks`,
+      status: "info",
+      duration: 3000,
+      isClosable: true,
+      position: "top",
+      variant: "solid",
+    });
+  };
+
   const handleBookmarkClick = (e) => {
     e.stopPropagation(); // Prevent event bubbling
+    const title = item.title || item.name || item.original_name;
 
     if (onToggleBookmark) {
       onToggleBookmark(item);
+
+      // Show appropriate toast based on current bookmark status
+      if (isItemBookmarked) {
+        showRemovedToast(title);
+      } else {
+        showAddedToast(title);
+      }
     } else {
       // Fallback to legacy method
       if (isItemBookmarked) {
-        const bookmark = { id: item.id, title: item.title || item.name || item.original_name };
-        removeBookmark(bookmark);
+        const bookmark = { id: item.id, title: title };
+        removeBookmark(bookmark)
+          .then(() => {
+            showRemovedToast(title);
+          })
+          .catch((error) => {
+            toast({
+              title: "Error",
+              description: "Failed to remove bookmark. Please try again.",
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+              position: "top",
+              variant: "solid",
+            });
+            console.error("Error removing bookmark:", error);
+          });
       } else {
         const bookmark = {
           id: item.id,
-          title: item.title || item.name || item.original_name,
+          title: title,
           type: item.isMovie ? "movie" : "tv",
         };
-        addBookmark(bookmark);
+        addBookmark(bookmark)
+          .then(() => {
+            showAddedToast(title);
+          })
+          .catch((error) => {
+            toast({
+              title: "Error",
+              description: "Failed to add bookmark. Please try again.",
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+              position: "top",
+              variant: "solid",
+            });
+            console.error("Error adding bookmark:", error);
+          });
       }
     }
   };
