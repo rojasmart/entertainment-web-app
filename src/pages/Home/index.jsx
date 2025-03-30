@@ -1,20 +1,8 @@
 import { useCallback } from "react";
-import {
-  Box,
-  Flex,
-  Menu,
-  MenuButton,
-  Avatar,
-  MenuList,
-  MenuItem,
-  Button,
-  Stack,
-  Container,
-  Image,
-} from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import { useContext, useEffect, useState } from "react"; // Import useContext hook from React
-import { AuthContext } from "../../contexts/auth"; // Import your AuthGoogleContext
+import { Box, Flex, Menu, MenuButton, Avatar, MenuList, MenuItem, Button, Stack, Container, Image } from "@chakra-ui/react";
+import { Link, useLocation } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../contexts/auth";
 import { SearchInput } from "../Components/SearchInput";
 import { MovieGrid } from "../Components/MovieGrid";
 import { getMoviesTrending, getMovies, getTVSeries } from "../../api/Auth";
@@ -40,10 +28,60 @@ function useIsMobile() {
   return isMobile;
 }
 
+// NavLink component with active state and hover effect
+const NavLink = ({ to, icon, alt }) => {
+  const location = useLocation();
+  const isActive = location.pathname === to || (to !== "/" && location.pathname.startsWith(to));
+
+  return (
+    <Link to={to}>
+      <Box
+        position="relative"
+        p={2}
+        borderRadius="md"
+        transition="all 0.2s"
+        _hover={{
+          transform: "scale(1.1)",
+          filter: "brightness(1.2)",
+        }}
+        sx={{
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            bottom: "-8px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: isActive ? "100%" : "0%",
+            height: "3px",
+            bg: "var(--primary-red)",
+            transition: "width 0.3s ease",
+            borderRadius: "2px",
+          },
+        }}
+      >
+        <Image src={icon} alt={alt} filter={isActive ? "brightness(1.5)" : "brightness(1)"} />
+        {isActive && (
+          <Box
+            position="absolute"
+            top="0"
+            left="0"
+            right="0"
+            bottom="0"
+            borderRadius="md"
+            boxShadow={`0 0 10px 2px var(--primary-red)`}
+            opacity="0.4"
+            pointerEvents="none"
+          />
+        )}
+      </Box>
+    </Link>
+  );
+};
+
 export const Layout = ({ children, backgroundImage, isMoviePage }) => {
-  const { signOut } = useContext(AuthContext); // Access signOut function from the context
+  const { signOut } = useContext(AuthContext);
   const handleLogout = () => {
-    signOut(); // Call signOut function
+    signOut();
   };
 
   const isMobile = useIsMobile();
@@ -56,34 +94,34 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
             <>
               <Box
                 style={{
-                  backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
-                  backgroundSize: "cover", // Cover the entire space
-                  backgroundRepeat: "no-repeat", // Do not repeat the image
-                  filter: "blur(10px)", // Add a blur filter
+                  backgroundImage: `url(${backgroundImage})`,
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  filter: "blur(10px)",
                   position: "absolute",
                   top: 0,
                   left: 0,
                   height: "100vh",
                   width: "100%",
                   zIndex: "-1",
-                  opacity: 0.5, // Adjust the opacity as needed
+                  opacity: 0.5,
                   backgroundColor: "black",
                 }}
               ></Box>
 
               <div
                 style={{
-                  backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
-                  backgroundSize: "cover", // Cover the entire space
-                  backgroundRepeat: "no-repeat", // Do not repeat the image
-                  filter: "blur(10px)", // Add a blur filter
+                  backgroundImage: `url(${backgroundImage})`,
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  filter: "blur(10px)",
                   position: "absolute",
                   top: 0,
                   left: 0,
                   height: "100vh",
                   width: "100%",
                   zIndex: "-1",
-                  opacity: 0.5, // Adjust the opacity as needed
+                  opacity: 0.5,
                   backgroundColor: "black",
                 }}
               ></div>
@@ -104,39 +142,15 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
             backgroundColor="var(--semi-dark-blue)"
             overflowX="auto"
           >
-            <Box
-              display={"flex"}
-              flexDirection={{ base: "row", md: "column" }}
-              gap={6}
-              alignItems={"center"}
-            >
-              <Image
-                src={Logo}
-                alt="Logo"
-                mt={{ base: 0, md: 6 }}
-                mb={{ base: 0, md: 12 }}
-              />
-              <Link to="/">
-                <Image src={HomeIcon} alt="home" />
-              </Link>
-              <Link to="/Movies">
-                <Image src={MoviesIcon} alt="movies" />
-              </Link>
-              <Link to="/Tvseries">
-                <Image src={TvSeriesIcon} alt="tvseries" />
-              </Link>
-              <Link to="/Bookmarks">
-                <Image src={BookmarkIcon} alt="bookmark" />
-              </Link>
+            <Box display={"flex"} flexDirection={{ base: "row", md: "column" }} gap={6} alignItems={"center"}>
+              <Image src={Logo} alt="Logo" mt={{ base: 0, md: 6 }} mb={{ base: 0, md: 12 }} />
+              <NavLink to="/" icon={HomeIcon} alt="home" />
+              <NavLink to="/Movies" icon={MoviesIcon} alt="movies" />
+              <NavLink to="/Tvseries" icon={TvSeriesIcon} alt="tvseries" />
+              <NavLink to="/Bookmarks" icon={BookmarkIcon} alt="bookmark" />
             </Box>
             <Menu>
-              <MenuButton
-                as={Button}
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-                mb={{ base: 0, md: 6 }}
-              >
+              <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} mb={{ base: 0, md: 6 }}>
                 <Avatar size={"sm"} />
               </MenuButton>
               <MenuList>
@@ -157,34 +171,34 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
             <>
               <Box
                 style={{
-                  backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
-                  backgroundSize: "cover", // Cover the entire space
-                  backgroundRepeat: "no-repeat", // Do not repeat the image
-                  filter: "blur(10px)", // Add a blur filter
+                  backgroundImage: `url(${backgroundImage})`,
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  filter: "blur(10px)",
                   position: "absolute",
                   top: 0,
                   left: 0,
                   height: "100vh",
                   width: "100%",
                   zIndex: "-1",
-                  opacity: 0.5, // Adjust the opacity as needed
+                  opacity: 0.5,
                   backgroundColor: "black",
                 }}
               ></Box>
 
               <div
                 style={{
-                  backgroundImage: `url(${backgroundImage})`, // Use backgroundImage prop
-                  backgroundSize: "cover", // Cover the entire space
-                  backgroundRepeat: "no-repeat", // Do not repeat the image
-                  filter: "blur(10px)", // Add a blur filter
+                  backgroundImage: `url(${backgroundImage})`,
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  filter: "blur(10px)",
                   position: "absolute",
                   top: 0,
                   left: 0,
                   height: "100vh",
                   width: "100%",
                   zIndex: "-1",
-                  opacity: 0.5, // Adjust the opacity as needed
+                  opacity: 0.5,
                   backgroundColor: "black",
                 }}
               ></div>
@@ -205,39 +219,15 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
             backgroundColor="var(--semi-dark-blue)"
             overflowX="auto"
           >
-            <Box
-              display={"flex"}
-              flexDirection={{ base: "row", md: "column" }}
-              gap={6}
-              alignItems={"center"}
-            >
-              <Image
-                src={Logo}
-                alt="Logo"
-                mt={{ base: 0, md: 6 }}
-                mb={{ base: 0, md: 12 }}
-              />
-              <Link to="/">
-                <Image src={HomeIcon} alt="home" />
-              </Link>
-              <Link to="/Movies">
-                <Image src={MoviesIcon} alt="movies" />
-              </Link>
-              <Link to="/Tvseries">
-                <Image src={TvSeriesIcon} alt="tvseries" />
-              </Link>
-              <Link to="/Bookmarks">
-                <Image src={BookmarkIcon} alt="bookmark" />
-              </Link>
+            <Box display={"flex"} flexDirection={{ base: "row", md: "column" }} gap={6} alignItems={"center"}>
+              <Image src={Logo} alt="Logo" mt={{ base: 0, md: 6 }} mb={{ base: 0, md: 12 }} />
+              <NavLink to="/" icon={HomeIcon} alt="home" />
+              <NavLink to="/Movies" icon={MoviesIcon} alt="movies" />
+              <NavLink to="/Tvseries" icon={TvSeriesIcon} alt="tvseries" />
+              <NavLink to="/Bookmarks" icon={BookmarkIcon} alt="bookmark" />
             </Box>
             <Menu>
-              <MenuButton
-                as={Button}
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-                mb={{ base: 0, md: 6 }}
-              >
+              <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} mb={{ base: 0, md: 6 }}>
                 <Avatar size={"sm"} />
               </MenuButton>
               <MenuList>
@@ -275,21 +265,15 @@ export const Home = () => {
   }, []);
 
   const filteredMovies = useCallback(() => {
-    return movies.filter((movie) =>
-      movie.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    return movies.filter((movie) => movie.title.toLowerCase().includes(searchTerm.toLowerCase()));
   }, [movies, searchTerm]);
 
   const filteredTvSeries = useCallback(() => {
-    return tvSeries.filter((series) =>
-      series.original_name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    return tvSeries.filter((series) => series.original_name.toLowerCase().includes(searchTerm.toLowerCase()));
   }, [tvSeries, searchTerm]);
 
   const filteredTrending = useCallback(() => {
-    return trending.filter((item) =>
-      item.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    return trending.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
   }, [trending, searchTerm]);
 
   return (
