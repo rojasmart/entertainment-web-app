@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { Container, Text, Spinner, Center } from "@chakra-ui/react";
+import { Container, Text, Spinner, Center, useToast } from "@chakra-ui/react";
 import { Layout } from "../pages/Home";
 import { SearchInput } from "../pages/Components/SearchInput";
 import { MovieGrid } from "../pages/Components/MovieGrid";
@@ -16,6 +16,7 @@ export const Bookmarks = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const toast = useToast();
 
   const handleSearch = useCallback((term) => {
     setSearchTerm(term);
@@ -61,14 +62,47 @@ export const Bookmarks = () => {
   const handleToggleBookmark = useCallback(
     async (item) => {
       try {
+        const title = item.title || item.name || item.original_name;
+        const isCurrentlyBookmarked = bookmarks?.some((bookmark) => bookmark.id === item.id);
+
         await toggleBookmark(item);
-        // No need to manually update state here as the context will update the bookmarks
-        // and trigger a re-render through the useEffect above
+
+        // Show toast based on the action performed
+        if (isCurrentlyBookmarked) {
+          toast({
+            title: "Bookmark Removed",
+            description: `${title} has been removed from your bookmarks`,
+            status: "info",
+            duration: 3000,
+            isClosable: true,
+            position: "top",
+            variant: "solid",
+          });
+        } else {
+          toast({
+            title: "Bookmark Added",
+            description: `${title} has been added to your bookmarks`,
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+            position: "top",
+            variant: "solid",
+          });
+        }
       } catch (error) {
         console.error("Error toggling bookmark:", error);
+        toast({
+          title: "Error",
+          description: "Failed to update bookmark. Please try again.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+          variant: "solid",
+        });
       }
     },
-    [toggleBookmark]
+    [toggleBookmark, bookmarks, toast]
   );
 
   const filteredMovies = useCallback(() => {
