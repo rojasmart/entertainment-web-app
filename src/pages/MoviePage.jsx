@@ -1,13 +1,56 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { Container, Text, Box, List, ListItem, IconButton, Flex } from "@chakra-ui/react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Container, Text, Box, List, ListItem, IconButton, Flex, Spinner, Center } from "@chakra-ui/react";
 import { Layout } from "../pages/Home";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import { useState, useEffect } from "react";
+import { getMovieDetails } from "../api/Auth";
 
 export const MoviePage = () => {
-  const location = useLocation();
-  const item = location.state.item;
+  const { id } = useParams();
+  const [item, setItem] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchMovieDetails = async () => {
+      try {
+        const data = await getMovieDetails(id);
+        // Add isMovie flag for consistency with the original code
+        setItem({ ...data, isMovie: true });
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching movie details:", err);
+        setError("Failed to load movie details");
+        setLoading(false);
+      }
+    };
+
+    fetchMovieDetails();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <Layout>
+        <Center minH="100vh">
+          <Spinner size="xl" color="red.500" />
+        </Center>
+      </Layout>
+    );
+  }
+
+  if (error || !item) {
+    return (
+      <Layout>
+        <Center minH="100vh">
+          <Text color="white" fontSize="xl">
+            {error || "Movie not found"}
+          </Text>
+        </Center>
+      </Layout>
+    );
+  }
 
   const movieBackground = `https://image.tmdb.org/t/p/original${item.backdrop_path}`;
 
