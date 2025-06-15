@@ -163,7 +163,7 @@ export function MovieCard({ item, isBookmarked, onToggleBookmark }) {
             zIndex={9}
             size={"lg"}
             cursor={"pointer"}
-            onClick={() => navigate(`/Movies/${item.id}`, { state: { item } })}
+            onClick={() => navigate(`/Movies/${item.id}`)}
             leftIcon={<Image src={IconPlay} />}
             sx={{
               borderRadius: "full",
@@ -213,6 +213,8 @@ export function MovieGrid({ text, textScroll, useScrollContainer, trending, movi
       ? [...moviesWithFlag, ...tvSeriesWithFlag].sort(() => Math.random() - 0.5)
       : [...moviesWithFlag].sort(() => Math.random() - 0.5);
 
+  const navigate = useNavigate(); // Moved navigate here
+
   return (
     <>
       {useScrollContainer ? (
@@ -235,6 +237,12 @@ export function MovieGrid({ text, textScroll, useScrollContainer, trending, movi
                     backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.backdrop_path})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
+                  }}
+                  onClick={() => navigate(`/Movies/${movie.id}`)}
+                  cursor="pointer"
+                  _hover={{
+                    transform: "scale(1.02)",
+                    transition: "transform 0.3s ease-in-out",
                   }}
                 >
                   <Flex direction="column" height="100%" justifyContent="flex-end">

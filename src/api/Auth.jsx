@@ -26,3 +26,9 @@ export async function getMoviesPopular() {
   const data = await response.json();
   return data;
 }
+
+export async function getMovieDetails(id) {
+  const response = await fetch(`${baseURL}/movie/${id}?api_key=${apiKey}`);
+  const data = await response.json();
+  return data;
+}
