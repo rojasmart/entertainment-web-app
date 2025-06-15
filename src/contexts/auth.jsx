@@ -231,7 +231,6 @@ export const AuthProvider = ({ children }) => {
     },
     [user]
   );
-
   // Update user profile (displayName, photoURL)
   const updateUserProfile = useCallback(
     async (profileData) => {
@@ -240,19 +239,36 @@ export const AuthProvider = ({ children }) => {
       }
 
       try {
-        await updateProfile(user, profileData);
+        console.log("Auth context: Atualizando perfil com dados:", profileData);
+        console.log("Auth context: Usuário atual:", user);
+
+        // Garantir que temos um objeto auth.currentUser atualizado
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+          throw new Error("Firebase could not get current user");
+        }
+
+        console.log("Auth context: Firebase currentUser:", currentUser);
+
+        // Tente atualizar o perfil com o Firebase
+        await updateProfile(currentUser, profileData);
+        console.log("Auth context: Perfil atualizado com sucesso no Firebase");
 
         // Update the user object in session storage with the new profile data
-        const updatedUser = { ...user };
-        if (profileData.displayName) updatedUser.displayName = profileData.displayName;
-        if (profileData.photoURL) updatedUser.photoURL = profileData.photoURL;
+        const updatedUser = { ...user, ...profileData };
+        updatedUser.displayName = profileData.displayName;
+        updatedUser.photoURL = profileData.photoURL;
 
         setUser(updatedUser);
         sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(updatedUser));
+        console.log("Auth context: Estado local e session storage atualizados");
 
         return true;
       } catch (error) {
-        console.error("Error updating profile: ", error);
+        console.error("Auth context: Erro na atualização de perfil:", error);
+        console.error("Auth context: Tipo de erro:", typeof error);
+        console.error("Auth context: Mensagem:", error.message);
+        console.error("Auth context: Stack:", error.stack);
         throw error;
       }
     },

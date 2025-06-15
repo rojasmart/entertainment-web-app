@@ -37,6 +37,10 @@ import * as Yup from "yup";
 
 const ProfileValidationSchema = Yup.object().shape({
   displayName: Yup.string().min(2, "Name is too short").max(50, "Name is too long").nullable(),
+  photoURL: Yup.string()
+    .url("Invalid URL")
+    .nullable()
+    .transform((value) => (value === "" ? null : value)),
   email: Yup.string().email("Invalid email address").required("Email is required"),
 });
 
@@ -97,26 +101,37 @@ export const Profile = () => {
   const handleUpdateProfile = async (values) => {
     setIsLoading(true);
     try {
-      // Check if there are actual changes to save
-      const displayNameChanged = values.displayName !== userData.displayName;
-      const photoURLChanged = values.photoURL && values.photoURL !== userData.photoURL;
+      // Logs detalhados para debug
+      console.log("Iniciando atualização de perfil");
+      console.log("Valores do formulário:", values);
+      console.log("Estado atual do usuário:", user);
+      console.log("Estado atual do userData:", userData);
 
-      if (!displayNameChanged && !photoURLChanged) {
-        // No changes to save, just close edit mode
-        setIsEditingProfile(false);
-        setIsLoading(false);
-        return;
+      // Garantir que estamos trabalhando com strings para o Firebase
+      const profileData = {
+        displayName: values.displayName || "",
+        photoURL: values.photoURL || "",
+      };
+      console.log("Dados a serem enviados para o Firebase:", profileData);
+
+      // Tentar atualizar o perfil diretamente com o Firebase
+      try {
+        // Atualize o perfil do usuário no Firebase
+        const result = await updateUserProfile(profileData);
+        console.log("Resposta do Firebase após atualização:", result);
+      } catch (firebaseError) {
+        console.error("Erro específico do Firebase:", firebaseError);
+        throw firebaseError; // Propagar o erro para ser tratado abaixo
       }
 
-      await updateUserProfile({
-        displayName: values.displayName,
-        photoURL: values.photoURL || userData.photoURL,
-      });
+      // Se chegou aqui, a atualização foi bem-sucedida
+      console.log("Atualizando estado local com novos dados");
 
+      // Atualize o estado local
       setUserData({
         ...userData,
-        displayName: values.displayName,
-        photoURL: values.photoURL || userData.photoURL,
+        displayName: profileData.displayName,
+        photoURL: profileData.photoURL,
       });
 
       setIsEditingProfile(false);
@@ -127,10 +142,16 @@ export const Profile = () => {
         duration: 3000,
         isClosable: true,
       });
+      console.log("Atualização de perfil concluída com sucesso");
     } catch (error) {
+      console.error("Erro completo durante atualização de perfil:", error);
+      console.error("Tipo de erro:", typeof error);
+      console.error("Mensagem de erro:", error.message);
+      console.error("Stack trace:", error.stack);
+
       toast({
         title: "Error",
-        description: error.message,
+        description: error.message || "Failed to update profile",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -271,13 +292,13 @@ export const Profile = () => {
               <Formik
                 enableReinitialize
                 initialValues={{
-                  displayName: userData.displayName,
-                  photoURL: userData.photoURL,
+                  displayName: userData.displayName || "",
+                  photoURL: userData.photoURL || "",
                 }}
                 validationSchema={ProfileValidationSchema}
                 onSubmit={handleUpdateProfile}
               >
-                {({ errors, touched, isValid, dirty }) => (
+                {({ errors, touched, isValid, values }) => (
                   <Form style={{ width: "100%" }}>
                     <VStack spacing={5} align="start">
                       <HStack spacing={6} width="100%">
@@ -313,7 +334,7 @@ export const Profile = () => {
                       )}
 
                       {isEditingProfile && (
-                        <Button mt={4} colorScheme="red" isLoading={isLoading} type="submit" leftIcon={<CheckIcon />} isDisabled={!isValid}>
+                        <Button mt={4} colorScheme="red" isLoading={isLoading} type="submit" leftIcon={<CheckIcon />}>
                           Save Changes
                         </Button>
                       )}
