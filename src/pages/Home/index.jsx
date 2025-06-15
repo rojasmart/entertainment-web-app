@@ -144,7 +144,7 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
           >
             <Box display={"flex"} flexDirection={{ base: "row", md: "column" }} gap={6} alignItems={"center"}>
               <Image src={Logo} alt="Logo" mt={{ base: 0, md: 6 }} mb={{ base: 0, md: 12 }} />
-              <NavLink to="/" icon={HomeIcon} alt="home" />
+              <NavLink to="/Home" icon={HomeIcon} alt="home" />
               <NavLink to="/Movies" icon={MoviesIcon} alt="movies" />
               <NavLink to="/Tvseries" icon={TvSeriesIcon} alt="tvseries" />
               <NavLink to="/Bookmarks" icon={BookmarkIcon} alt="bookmark" />
@@ -154,8 +154,9 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
                 <Avatar size={"sm"} />
               </MenuButton>
               <MenuList>
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>Settings</MenuItem>
+                <MenuItem as={Link} to="/Profile">
+                  Profile
+                </MenuItem>
                 <MenuItem onClick={handleLogout}>Log out</MenuItem>
               </MenuList>
             </Menu>
@@ -221,7 +222,7 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
           >
             <Box display={"flex"} flexDirection={{ base: "row", md: "column" }} gap={6} alignItems={"center"}>
               <Image src={Logo} alt="Logo" mt={{ base: 0, md: 6 }} mb={{ base: 0, md: 12 }} />
-              <NavLink to="/" icon={HomeIcon} alt="home" />
+              <NavLink to="/Home" icon={HomeIcon} alt="home" />
               <NavLink to="/Movies" icon={MoviesIcon} alt="movies" />
               <NavLink to="/Tvseries" icon={TvSeriesIcon} alt="tvseries" />
               <NavLink to="/Bookmarks" icon={BookmarkIcon} alt="bookmark" />
@@ -231,8 +232,9 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
                 <Avatar size={"sm"} />
               </MenuButton>
               <MenuList>
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>Settings</MenuItem>
+                <MenuItem as={Link} to="/Profile">
+                  Profile
+                </MenuItem>
                 <MenuItem onClick={handleLogout}>Log out</MenuItem>
               </MenuList>
             </Menu>
