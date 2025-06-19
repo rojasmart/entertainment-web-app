@@ -41,6 +41,9 @@ const ProfileValidationSchema = Yup.object().shape({
     .url("Invalid URL")
     .nullable()
     .transform((value) => (value === "" ? null : value)),
+});
+
+const EmailValidationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email address").required("Email is required"),
 });
 
@@ -259,6 +262,9 @@ export const Profile = () => {
     );
   }
 
+  console.log("values.displayName:", userData.displayName);
+  console.log("values.photoURL:", userData.photoURL);
+
   return (
     <Layout isMoviePage={false}>
       <Container maxW="container.md" py={10}>
@@ -296,55 +302,65 @@ export const Profile = () => {
                 validationSchema={ProfileValidationSchema}
                 onSubmit={handleUpdateProfile}
               >
-                {({ errors, touched, isValid, values, dirty }) => (
-                  <Form style={{ width: "100%" }}>
-                    <VStack spacing={5} align="start">
-                      <HStack spacing={6} width="100%">
-                        {/* Usar values do formulário para mostrar preview da imagem */}
-                        <Avatar
-                          size="xl"
-                          name={values.displayName || user?.email}
-                          src={isEditingProfile ? values.photoURL : userData.photoURL}
-                          bg="var(--red)"
-                        />
-                        <VStack align="start" flex={1}>
-                          {isEditingProfile ? (
-                            <FormControl isInvalid={errors.displayName && touched.displayName}>
-                              <FormLabel htmlFor="displayName" color="white">
-                                Display Name
-                              </FormLabel>
-                              <Field as={Input} id="displayName" name="displayName" color="white" />
-                              <FormErrorMessage>{errors.displayName}</FormErrorMessage>
-                            </FormControl>
-                          ) : (
-                            <>
-                              <Text color="gray.400">Display Name</Text>
-                              <Text color="white" fontWeight="bold" fontSize="lg">
-                                {userData.displayName || "Not set"}
-                              </Text>
-                            </>
-                          )}
-                        </VStack>
-                      </HStack>
+                {({ errors, touched, isValid, values, dirty }) => {
+                  console.log("Formik errors:", errors);
+                  return (
+                    <Form style={{ width: "100%" }}>
+                      <VStack spacing={5} align="start">
+                        <HStack spacing={6} width="100%">
+                          {/* Usar values do formulário para mostrar preview da imagem */}
+                          <Avatar
+                            size="xl"
+                            name={values.displayName || user?.email}
+                            src={isEditingProfile ? values.photoURL : userData.photoURL}
+                            bg="var(--red)"
+                          />
+                          <VStack align="start" flex={1}>
+                            {isEditingProfile ? (
+                              <FormControl isInvalid={errors.displayName && touched.displayName}>
+                                <FormLabel htmlFor="displayName" color="white">
+                                  Display Name
+                                </FormLabel>
+                                <Field as={Input} id="displayName" name="displayName" color="white" />
+                                <FormErrorMessage>{errors.displayName}</FormErrorMessage>
+                              </FormControl>
+                            ) : (
+                              <>
+                                <Text color="gray.400">Display Name</Text>
+                                <Text color="white" fontWeight="bold" fontSize="lg">
+                                  {userData.displayName || "Not set"}
+                                </Text>
+                              </>
+                            )}
+                          </VStack>
+                        </HStack>
 
-                      {isEditingProfile && (
-                        <FormControl isInvalid={errors.photoURL && touched.photoURL}>
-                          <FormLabel htmlFor="photoURL" color="white">
-                            Profile Picture URL
-                          </FormLabel>
-                          <Field as={Input} id="photoURL" name="photoURL" placeholder="https://example.com/your-photo.jpg" color="white" />
-                          <FormErrorMessage>{errors.photoURL}</FormErrorMessage>
-                        </FormControl>
-                      )}
+                        {isEditingProfile && (
+                          <FormControl isInvalid={errors.photoURL && touched.photoURL}>
+                            <FormLabel htmlFor="photoURL" color="white">
+                              Profile Picture URL
+                            </FormLabel>
+                            <Field as={Input} id="photoURL" name="photoURL" placeholder="https://example.com/your-photo.jpg" color="white" />
+                            <FormErrorMessage>{errors.photoURL}</FormErrorMessage>
+                          </FormControl>
+                        )}
 
-                      {isEditingProfile && (
-                        <Button mt={4} colorScheme="red" isLoading={isLoading} type="submit" leftIcon={<CheckIcon />} isDisabled={!isValid || !dirty}>
-                          Save Changes
-                        </Button>
-                      )}
-                    </VStack>
-                  </Form>
-                )}
+                        {isEditingProfile && (
+                          <Button
+                            mt={4}
+                            colorScheme="red"
+                            isLoading={isLoading}
+                            type="submit"
+                            leftIcon={<CheckIcon />}
+                            isDisabled={!isValid || !values.displayName || !values.photoURL}
+                          >
+                            Save Changes
+                          </Button>
+                        )}
+                      </VStack>
+                    </Form>
+                  );
+                }}
               </Formik>
             </VStack>
           </Box>
@@ -372,7 +388,7 @@ export const Profile = () => {
               <Formik
                 enableReinitialize
                 initialValues={{ email: userData.email }}
-                validationSchema={ProfileValidationSchema}
+                validationSchema={EmailValidationSchema}
                 onSubmit={handleUpdateEmail}
               >
                 {({ errors, touched, isValid, dirty }) => (
