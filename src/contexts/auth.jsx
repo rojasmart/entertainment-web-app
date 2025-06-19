@@ -321,17 +321,19 @@ export const AuthProvider = ({ children }) => {
 
   // Delete user account and associated data
   const deleteUserAccount = useCallback(async () => {
-    if (!user) {
+    const auth = getAuth(app);
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
       throw new Error("No user signed in");
     }
 
     try {
-      // First, delete user data from Firestore
-      const userRef = doc(db, "users", user.uid);
+      // Delete user data from Firestore
+      const userRef = doc(db, "users", currentUser.uid);
       await deleteDoc(userRef);
 
-      // Then delete the user account
-      await deleteUser(user);
+      // Delete the user account from Firebase Auth
+      await deleteUser(currentUser);
       return true;
     } catch (error) {
       console.error("Error deleting account: ", error);
