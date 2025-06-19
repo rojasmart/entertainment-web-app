@@ -1,6 +1,15 @@
 import { useState, createContext, useEffect, useCallback } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { doc, updateDoc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  updateProfile,
+  updateEmail,
+  updatePassword,
+  deleteUser,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+} from "firebase/auth";
+import { doc, updateDoc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
 import { app } from "../services/firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 
@@ -204,6 +213,134 @@ export const AuthProvider = ({ children }) => {
     [user, db]
   );
 
+  // Verify current password (for reauthentication)
+  const verifyPassword = useCallback(
+    async (password) => {
+      if (!user) {
+        throw new Error("No user signed in");
+      }
+
+      try {
+        const credential = EmailAuthProvider.credential(user.email, password);
+        await reauthenticateWithCredential(user, credential);
+        return true;
+      } catch (error) {
+        console.error("Error verifying password: ", error);
+        throw error;
+      }
+    },
+    [user]
+  );
+  // Update user profile (displayName, photoURL)
+  const updateUserProfile = useCallback(
+    async (profileData) => {
+      if (!user) {
+        throw new Error("No user signed in");
+      }
+
+      try {
+        console.log("Auth context: Atualizando perfil com dados:", profileData);
+        console.log("Auth context: Usuário atual:", user);
+
+        // Garantir que temos um objeto auth.currentUser atualizado
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+          throw new Error("Firebase could not get current user");
+        }
+
+        console.log("Auth context: Firebase currentUser:", currentUser);
+
+        // Tente atualizar o perfil com o Firebase
+        await updateProfile(currentUser, profileData);
+        console.log("Auth context: Perfil atualizado com sucesso no Firebase");
+
+        // Update the user object in session storage with the new profile data
+        const updatedUser = { ...user, ...profileData };
+        updatedUser.displayName = profileData.displayName;
+        updatedUser.photoURL = profileData.photoURL;
+
+        await currentUser.reload();
+        const refreshedUser = getAuth().currentUser;
+        setUser(refreshedUser);
+        sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(refreshedUser));
+        console.log("Auth context: Estado local e session storage atualizados");
+
+        return true;
+      } catch (error) {
+        console.error("Auth context: Erro na atualização de perfil:", error);
+        console.error("Auth context: Tipo de erro:", typeof error);
+        console.error("Auth context: Mensagem:", error.message);
+        console.error("Auth context: Stack:", error.stack);
+        throw error;
+      }
+    },
+    [user, auth]
+  );
+
+  // Update user email
+  const updateUserEmail = useCallback(
+    async (newEmail) => {
+      if (!user) {
+        throw new Error("No user signed in");
+      }
+
+      try {
+        await updateEmail(user, newEmail);
+
+        // Update the user object in session storage with the new email
+        const updatedUser = { ...user, email: newEmail };
+        setUser(updatedUser);
+        sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(updatedUser));
+
+        return true;
+      } catch (error) {
+        console.error("Error updating email: ", error);
+        throw error;
+      }
+    },
+    [user]
+  );
+
+  // Update user password
+  const updateUserPassword = useCallback(
+    async (newPassword) => {
+      if (!user) {
+        throw new Error("No user signed in");
+      }
+
+      try {
+        await updatePassword(user, newPassword);
+        return true;
+      } catch (error) {
+        console.error("Error updating password: ", error);
+        throw error;
+      }
+    },
+    [user]
+  );
+
+  // Delete user account and associated data
+  const deleteUserAccount = useCallback(async () => {
+    const auth = getAuth(app);
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      throw new Error("No user signed in");
+    }
+
+    try {
+      // Delete user data from Firestore
+      const userRef = doc(db, "users", currentUser.uid);
+      await deleteDoc(userRef);
+
+      // Delete the user account from Firebase Auth
+      await deleteUser(currentUser);
+      return true;
+    } catch (error) {
+      console.error("Error deleting account: ", error);
+      throw error;
+    }
+  }, [user, db]);
+
   async function signInWithEmailPassword(email, password) {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -230,6 +367,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         signed: !!user,
         user,
+        loading,
         bookmarks,
         bookmarksLoaded,
         signInWithEmailPassword,
@@ -238,6 +376,11 @@ export const AuthProvider = ({ children }) => {
         removeBookmark,
         fetchBookmarks,
         toggleBookmark,
+        verifyPassword,
+        updateUserProfile,
+        updateUserEmail,
+        updateUserPassword,
+        deleteUserAccount,
       }}
     >
       {!loading && children}

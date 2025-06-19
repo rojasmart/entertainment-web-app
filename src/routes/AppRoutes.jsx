@@ -7,6 +7,7 @@ import { Movies } from "../pages/Movies";
 import { MoviePage } from "../pages/MoviePage";
 import { TvSeries } from "../pages/TvSeries";
 import { Bookmarks } from "../pages/Bookmarks";
+import { Profile } from "../pages/Profile";
 import { PrivateRoutes } from "./PrivateRoutes";
 
 export function AppRoutes() {
@@ -16,11 +17,13 @@ export function AppRoutes() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/*" element={<PrivateRoutes />}>
+          {" "}
           <Route path="Home" element={<Home />} />
           <Route path="Movies" element={<Movies />} />
           <Route path="Movies/:id" element={<MoviePage />} />
           <Route path="Tvseries" element={<TvSeries />} />
           <Route path="Bookmarks" element={<Bookmarks />} />
+          <Route path="Profile" element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>

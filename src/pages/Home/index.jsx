@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Box, Flex, Menu, MenuButton, Avatar, MenuList, MenuItem, Button, Stack, Container, Image } from "@chakra-ui/react";
+import { Box, Flex, Menu, MenuButton, Avatar, MenuList, MenuItem, Button, Stack, Container, Image, Text } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/auth";
@@ -79,7 +79,7 @@ const NavLink = ({ to, icon, alt }) => {
 };
 
 export const Layout = ({ children, backgroundImage, isMoviePage }) => {
-  const { signOut } = useContext(AuthContext);
+  const { signOut, user } = useContext(AuthContext);
   const handleLogout = () => {
     signOut();
   };
@@ -144,18 +144,24 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
           >
             <Box display={"flex"} flexDirection={{ base: "row", md: "column" }} gap={6} alignItems={"center"}>
               <Image src={Logo} alt="Logo" mt={{ base: 0, md: 6 }} mb={{ base: 0, md: 12 }} />
-              <NavLink to="/" icon={HomeIcon} alt="home" />
+              <NavLink to="/Home" icon={HomeIcon} alt="home" />
               <NavLink to="/Movies" icon={MoviesIcon} alt="movies" />
               <NavLink to="/Tvseries" icon={TvSeriesIcon} alt="tvseries" />
               <NavLink to="/Bookmarks" icon={BookmarkIcon} alt="bookmark" />
             </Box>
             <Menu>
-              <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} mb={{ base: 0, md: 6 }}>
-                <Avatar size={"sm"} />
+              <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} mb={{ base: 0, md: 6 }} p={0}>
+                <Flex direction="column" align="center">
+                  <Avatar size={"sm"} src={user?.photoURL || undefined} name={user?.displayName || user?.email || ""} />
+                  <Text mt={1} fontSize="sm" color="white" display={{ base: "none", md: "block" }}>
+                    {user?.displayName || user?.email || "User"}
+                  </Text>
+                </Flex>
               </MenuButton>
               <MenuList>
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>Settings</MenuItem>
+                <MenuItem as={Link} to="/Profile">
+                  Profile
+                </MenuItem>
                 <MenuItem onClick={handleLogout}>Log out</MenuItem>
               </MenuList>
             </Menu>
@@ -221,18 +227,19 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
           >
             <Box display={"flex"} flexDirection={{ base: "row", md: "column" }} gap={6} alignItems={"center"}>
               <Image src={Logo} alt="Logo" mt={{ base: 0, md: 6 }} mb={{ base: 0, md: 12 }} />
-              <NavLink to="/" icon={HomeIcon} alt="home" />
+              <NavLink to="/Home" icon={HomeIcon} alt="home" />
               <NavLink to="/Movies" icon={MoviesIcon} alt="movies" />
               <NavLink to="/Tvseries" icon={TvSeriesIcon} alt="tvseries" />
               <NavLink to="/Bookmarks" icon={BookmarkIcon} alt="bookmark" />
             </Box>
             <Menu>
               <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} mb={{ base: 0, md: 6 }}>
-                <Avatar size={"sm"} />
+                <Avatar size={"sm"} src={user?.photoURL || undefined} name={user?.displayName || user?.email || ""} />
               </MenuButton>
               <MenuList>
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>Settings</MenuItem>
+                <MenuItem as={Link} to="/Profile">
+                  Profile
+                </MenuItem>
                 <MenuItem onClick={handleLogout}>Log out</MenuItem>
               </MenuList>
             </Menu>
