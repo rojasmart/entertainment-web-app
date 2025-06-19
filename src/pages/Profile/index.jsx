@@ -535,7 +535,7 @@ export const Profile = () => {
               <HStack justifyContent="space-between" width="100%">
                 <HStack>
                   <Icon as={colorMode === "dark" ? MoonIcon : SunIcon} color="white" />
-                  <Text color="white">Dark Mode</Text>
+                  {colorMode === "dark" ? <Text color="white">Dark Mode</Text> : <Text color="white">Light Mode</Text>}
                 </HStack>
                 <Switch colorScheme="green" isChecked={colorMode === "dark"} onChange={toggleColorMode} size="lg" />
               </HStack>
