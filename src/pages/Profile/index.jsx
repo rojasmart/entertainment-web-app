@@ -89,6 +89,7 @@ export const Profile = () => {
   const cancelRef = React.useRef();
 
   useEffect(() => {
+    console.log("user data updated:", user);
     if (user) {
       setUserData({
         displayName: user.displayName || "",
@@ -101,37 +102,37 @@ export const Profile = () => {
   const handleUpdateProfile = async (values) => {
     setIsLoading(true);
     try {
-      // Logs detalhados para debug
       console.log("Iniciando atualização de perfil");
       console.log("Valores do formulário:", values);
       console.log("Estado atual do usuário:", user);
       console.log("Estado atual do userData:", userData);
 
+      // Verificar se houve mudanças reais
+      const hasDisplayNameChanged = values.displayName !== (userData.displayName || "");
+      const hasPhotoURLChanged = values.photoURL !== (userData.photoURL || "");
+
+      if (!hasDisplayNameChanged && !hasPhotoURLChanged) {
+        console.log("Nenhuma mudança detectada");
+        setIsEditingProfile(false);
+        return;
+      }
+
       // Garantir que estamos trabalhando com strings para o Firebase
       const profileData = {
-        displayName: values.displayName || "",
-        photoURL: values.photoURL || "",
+        displayName: values.displayName || null,
+        photoURL: values.photoURL || null,
       };
       console.log("Dados a serem enviados para o Firebase:", profileData);
 
-      // Tentar atualizar o perfil diretamente com o Firebase
-      try {
-        // Atualize o perfil do usuário no Firebase
-        const result = await updateUserProfile(profileData);
-        console.log("Resposta do Firebase após atualização:", result);
-      } catch (firebaseError) {
-        console.error("Erro específico do Firebase:", firebaseError);
-        throw firebaseError; // Propagar o erro para ser tratado abaixo
-      }
+      // Atualize o perfil do usuário no Firebase
+      const result = await updateUserProfile(profileData);
+      console.log("Resposta do Firebase após atualização:", result);
 
-      // Se chegou aqui, a atualização foi bem-sucedida
-      console.log("Atualizando estado local com novos dados");
-
-      // Atualize o estado local
+      // Atualize o estado local IMEDIATAMENTE
       setUserData({
         ...userData,
-        displayName: profileData.displayName,
-        photoURL: profileData.photoURL,
+        displayName: values.displayName || "",
+        photoURL: values.photoURL || "",
       });
 
       setIsEditingProfile(false);
@@ -145,9 +146,6 @@ export const Profile = () => {
       console.log("Atualização de perfil concluída com sucesso");
     } catch (error) {
       console.error("Erro completo durante atualização de perfil:", error);
-      console.error("Tipo de erro:", typeof error);
-      console.error("Mensagem de erro:", error.message);
-      console.error("Stack trace:", error.stack);
 
       toast({
         title: "Error",
@@ -298,11 +296,17 @@ export const Profile = () => {
                 validationSchema={ProfileValidationSchema}
                 onSubmit={handleUpdateProfile}
               >
-                {({ errors, touched, isValid, values }) => (
+                {({ errors, touched, isValid, values, dirty }) => (
                   <Form style={{ width: "100%" }}>
                     <VStack spacing={5} align="start">
                       <HStack spacing={6} width="100%">
-                        <Avatar size="xl" name={userData.displayName || user?.email} src={userData.photoURL} bg="var(--red)" />
+                        {/* Usar values do formulário para mostrar preview da imagem */}
+                        <Avatar
+                          size="xl"
+                          name={values.displayName || user?.email}
+                          src={isEditingProfile ? values.photoURL : userData.photoURL}
+                          bg="var(--red)"
+                        />
                         <VStack align="start" flex={1}>
                           {isEditingProfile ? (
                             <FormControl isInvalid={errors.displayName && touched.displayName}>
@@ -334,7 +338,7 @@ export const Profile = () => {
                       )}
 
                       {isEditingProfile && (
-                        <Button mt={4} colorScheme="red" isLoading={isLoading} type="submit" leftIcon={<CheckIcon />}>
+                        <Button mt={4} colorScheme="red" isLoading={isLoading} type="submit" leftIcon={<CheckIcon />} isDisabled={!isValid || !dirty}>
                           Save Changes
                         </Button>
                       )}

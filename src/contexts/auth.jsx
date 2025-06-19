@@ -259,8 +259,10 @@ export const AuthProvider = ({ children }) => {
         updatedUser.displayName = profileData.displayName;
         updatedUser.photoURL = profileData.photoURL;
 
-        setUser(updatedUser);
-        sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(updatedUser));
+        await currentUser.reload();
+        const refreshedUser = getAuth().currentUser;
+        setUser(refreshedUser);
+        sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(refreshedUser));
         console.log("Auth context: Estado local e session storage atualizados");
 
         return true;
@@ -272,7 +274,7 @@ export const AuthProvider = ({ children }) => {
         throw error;
       }
     },
-    [user]
+    [user, auth]
   );
 
   // Update user email
