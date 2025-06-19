@@ -281,12 +281,12 @@ export const Profile = () => {
                   Profile Information
                 </Heading>
                 {!isEditingProfile ? (
-                  <Button leftIcon={<EditIcon />} colorScheme="red" variant="outline" onClick={() => setIsEditingProfile(true)}>
+                  <Button leftIcon={<EditIcon />} colorScheme="teal" onClick={() => setIsEditingProfile(true)}>
                     Edit
                   </Button>
                 ) : (
                   <HStack>
-                    <Button leftIcon={<CloseIcon />} colorScheme="gray" variant="outline" onClick={() => setIsEditingProfile(false)}>
+                    <Button leftIcon={<CloseIcon />} colorScheme="red" onClick={() => setIsEditingProfile(false)}>
                       Cancel
                     </Button>
                   </HStack>
@@ -348,7 +348,7 @@ export const Profile = () => {
                         {isEditingProfile && (
                           <Button
                             mt={4}
-                            colorScheme="red"
+                            colorScheme="green"
                             isLoading={isLoading}
                             type="submit"
                             leftIcon={<CheckIcon />}
@@ -373,12 +373,12 @@ export const Profile = () => {
                   Email Address
                 </Heading>
                 {!isEditingEmail ? (
-                  <Button leftIcon={<EditIcon />} colorScheme="red" variant="outline" onClick={() => setIsEditingEmail(true)}>
+                  <Button leftIcon={<EditIcon />} colorScheme="teal" onClick={() => setIsEditingEmail(true)}>
                     Edit
                   </Button>
                 ) : (
                   <HStack>
-                    <Button leftIcon={<CloseIcon />} colorScheme="gray" variant="outline" onClick={() => setIsEditingEmail(false)}>
+                    <Button leftIcon={<CloseIcon />} colorScheme="red" onClick={() => setIsEditingEmail(false)}>
                       Cancel
                     </Button>
                   </HStack>
@@ -412,7 +412,7 @@ export const Profile = () => {
                       )}
 
                       {isEditingEmail && (
-                        <Button mt={4} colorScheme="red" isLoading={isLoading} type="submit" leftIcon={<CheckIcon />} isDisabled={!isValid}>
+                        <Button mt={4} colorScheme="green" isLoading={isLoading} type="submit" leftIcon={<CheckIcon />} isDisabled={!isValid}>
                           Update Email
                         </Button>
                       )}
@@ -431,11 +431,11 @@ export const Profile = () => {
                   Password
                 </Heading>
                 {!isChangingPassword ? (
-                  <Button leftIcon={<EditIcon />} colorScheme="red" variant="outline" onClick={() => setIsChangingPassword(true)}>
+                  <Button leftIcon={<EditIcon />} colorScheme="teal" onClick={() => setIsChangingPassword(true)}>
                     Change Password
                   </Button>
                 ) : (
-                  <Button leftIcon={<CloseIcon />} colorScheme="gray" variant="outline" onClick={() => setIsChangingPassword(false)}>
+                  <Button leftIcon={<CloseIcon />} colorScheme="red" onClick={() => setIsChangingPassword(false)}>
                     Cancel
                   </Button>
                 )}
@@ -505,7 +505,14 @@ export const Profile = () => {
                           <FormErrorMessage>{errors.confirmPassword}</FormErrorMessage>
                         </FormControl>
 
-                        <Button mt={4} colorScheme="red" isLoading={isLoading} type="submit" leftIcon={<CheckIcon />} isDisabled={!isValid || !dirty}>
+                        <Button
+                          mt={4}
+                          colorScheme="green"
+                          isLoading={isLoading}
+                          type="submit"
+                          leftIcon={<CheckIcon />}
+                          isDisabled={!isValid || !dirty}
+                        >
                           Update Password
                         </Button>
                       </VStack>
@@ -530,7 +537,7 @@ export const Profile = () => {
                   <Icon as={colorMode === "dark" ? MoonIcon : SunIcon} color="white" />
                   <Text color="white">Dark Mode</Text>
                 </HStack>
-                <Switch colorScheme="red" isChecked={colorMode === "dark"} onChange={toggleColorMode} size="lg" />
+                <Switch colorScheme="green" isChecked={colorMode === "dark"} onChange={toggleColorMode} size="lg" />
               </HStack>
             </VStack>
           </Box>
