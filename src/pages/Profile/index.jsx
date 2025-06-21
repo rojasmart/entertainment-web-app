@@ -17,7 +17,6 @@ import {
   Input,
   FormErrorMessage,
   useToast,
-  Divider,
   Switch,
   AlertDialog,
   AlertDialogBody,
@@ -31,6 +30,7 @@ import {
   InputRightElement,
   Spinner,
   useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { EditIcon, CheckIcon, CloseIcon, ViewIcon, ViewOffIcon, DeleteIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import * as Yup from "yup";
@@ -86,6 +86,8 @@ export const Profile = () => {
     email: user?.email || "",
     photoURL: user?.photoURL || "",
   });
+
+  const boxBg = useColorModeValue("gray.100", "var(--semi-dark-blue)");
 
   const { isOpen: isDeleteAlertOpen, onOpen: onDeleteAlertOpen, onClose: onDeleteAlertClose } = useDisclosure();
 
@@ -257,10 +259,10 @@ export const Profile = () => {
           </Heading>
 
           {/* Profile Section */}
-          <Box bg="var(--semi-dark-blue)" borderRadius="lg" p={6}>
+          <Box bg={boxBg} borderRadius="lg" p={6}>
             <VStack align="start" spacing={6}>
               <HStack justifyContent="space-between" width="100%">
-                <Heading as="h2" size="md" color="white">
+                <Heading as="h2" size="md">
                   Profile Information
                 </Heading>
                 {!isEditingProfile ? (
@@ -347,10 +349,10 @@ export const Profile = () => {
           </Box>
 
           {/* Email Section */}
-          <Box bg="var(--semi-dark-blue)" borderRadius="lg" p={6}>
+          <Box bg={boxBg} borderRadius="lg" p={6}>
             <VStack align="start" spacing={6}>
               <HStack justifyContent="space-between" width="100%">
-                <Heading as="h2" size="md" color="white">
+                <Heading as="h2" size="md">
                   Email Address
                 </Heading>
                 {!isEditingEmail ? (
@@ -405,10 +407,10 @@ export const Profile = () => {
           </Box>
 
           {/* Password Section */}
-          <Box bg="var(--semi-dark-blue)" borderRadius="lg" p={6}>
+          <Box bg={boxBg} borderRadius="lg" p={6}>
             <VStack align="start" spacing={6}>
               <HStack justifyContent="space-between" width="100%">
-                <Heading as="h2" size="md" color="white">
+                <Heading as="h2" size="md">
                   Password
                 </Heading>
                 {!isChangingPassword ? (
@@ -507,9 +509,9 @@ export const Profile = () => {
           </Box>
 
           {/* Theme Preferences */}
-          <Box bg="var(--semi-dark-blue)" borderRadius="lg" p={6}>
+          <Box bg={boxBg} borderRadius="lg" p={6}>
             <VStack align="start" spacing={6} width="100%">
-              <Heading as="h2" size="md" color="white">
+              <Heading as="h2" size="md">
                 Theme Preferences
               </Heading>
 
@@ -524,9 +526,9 @@ export const Profile = () => {
           </Box>
 
           {/* Delete Account */}
-          <Box bg="var(--semi-dark-blue)" borderRadius="lg" p={6}>
+          <Box bg={boxBg} borderRadius="lg" p={6}>
             <VStack align="start" spacing={6} width="100%">
-              <Heading as="h2" size="md" color="white">
+              <Heading as="h2" size="md">
                 Delete Account
               </Heading>
 
