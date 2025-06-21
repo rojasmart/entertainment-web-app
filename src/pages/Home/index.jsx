@@ -1,13 +1,12 @@
-import { useCallback } from "react";
-import { Box, Flex, Menu, MenuButton, Avatar, MenuList, MenuItem, Button, Stack, Container, Image, Text, useColorModeValue } from "@chakra-ui/react";
-import { Link, useLocation } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
+import { Box, Flex, Container, useColorModeValue } from "@chakra-ui/react";
 import { AuthContext } from "../../contexts/auth";
 import { SearchInput } from "../Components/SearchInput";
 import { MovieGrid } from "../Components/MovieGrid";
 import { getMoviesTrending, getMovies, getTVSeries } from "../../api/Auth";
 
 import SidebarNav from "../Components/SidebarNav";
+import BlurredBackground from "../Components/BlurredBackground";
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -38,43 +37,7 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
     <Box>
       {!isMobile && (
         <Flex>
-          {isMoviePage && (
-            <>
-              <Box
-                style={{
-                  backgroundImage: `url(${backgroundImage})`,
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                  filter: "blur(10px)",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  height: "100vh",
-                  width: "100%",
-                  zIndex: "-1",
-                  opacity: 0.5,
-                  backgroundColor: "black",
-                }}
-              ></Box>
-
-              <div
-                style={{
-                  backgroundImage: `url(${backgroundImage})`,
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                  filter: "blur(10px)",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  height: "100vh",
-                  width: "100%",
-                  zIndex: "-1",
-                  opacity: 0.5,
-                  backgroundColor: "black",
-                }}
-              ></div>
-            </>
-          )}
+          {isMoviePage && <BlurredBackground backgroundImage={backgroundImage} />}
           <SidebarNav user={user} handleLogout={handleLogout} boxBg={boxBg} />
           <Box flex="1" overflowY="auto">
             {children}
@@ -83,43 +46,7 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
       )}
       {isMobile && (
         <>
-          {isMoviePage && (
-            <>
-              <Box
-                style={{
-                  backgroundImage: `url(${backgroundImage})`,
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                  filter: "blur(10px)",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  height: "100vh",
-                  width: "100%",
-                  zIndex: "-1",
-                  opacity: 0.5,
-                  backgroundColor: "black",
-                }}
-              ></Box>
-
-              <div
-                style={{
-                  backgroundImage: `url(${backgroundImage})`,
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                  filter: "blur(10px)",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  height: "100vh",
-                  width: "100%",
-                  zIndex: "-1",
-                  opacity: 0.5,
-                  backgroundColor: "black",
-                }}
-              ></div>
-            </>
-          )}
+          {isMoviePage && <BlurredBackground backgroundImage={backgroundImage} />}
           <SidebarNav user={user} handleLogout={handleLogout} boxBg={boxBg} />
           <Box flex="1" overflowY="auto">
             {children}
