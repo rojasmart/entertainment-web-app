@@ -239,20 +239,13 @@ export const AuthProvider = ({ children }) => {
       }
 
       try {
-        console.log("Auth context: Atualizando perfil com dados:", profileData);
-        console.log("Auth context: Usuário atual:", user);
-
-        // Garantir que temos um objeto auth.currentUser atualizado
         const currentUser = auth.currentUser;
         if (!currentUser) {
           throw new Error("Firebase could not get current user");
         }
 
-        console.log("Auth context: Firebase currentUser:", currentUser);
-
         // Tente atualizar o perfil com o Firebase
         await updateProfile(currentUser, profileData);
-        console.log("Auth context: Perfil atualizado com sucesso no Firebase");
 
         // Update the user object in session storage with the new profile data
         const updatedUser = { ...user, ...profileData };
@@ -263,14 +256,9 @@ export const AuthProvider = ({ children }) => {
         const refreshedUser = getAuth().currentUser;
         setUser(refreshedUser);
         sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(refreshedUser));
-        console.log("Auth context: Estado local e session storage atualizados");
 
         return true;
       } catch (error) {
-        console.error("Auth context: Erro na atualização de perfil:", error);
-        console.error("Auth context: Tipo de erro:", typeof error);
-        console.error("Auth context: Mensagem:", error.message);
-        console.error("Auth context: Stack:", error.stack);
         throw error;
       }
     },

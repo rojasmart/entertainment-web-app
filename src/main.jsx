@@ -8,11 +8,13 @@ const theme = extendTheme({
     initialColorMode: "dark",
     useSystemColorMode: false,
   },
+
   colors: {
     darkBlue: "hsl(223, 30%, 9%)",
     semiDarkBlue: "hsl(223, 36%, 14%)",
     greyishBlue: "hsl(223, 23%, 46%)",
   },
+
   styles: {
     global: ({ colorMode }) => ({
       body: {

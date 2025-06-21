@@ -92,7 +92,6 @@ export const Profile = () => {
   const cancelRef = React.useRef();
 
   useEffect(() => {
-    console.log("user data updated:", user);
     if (user) {
       setUserData({
         displayName: user.displayName || "",
@@ -105,33 +104,21 @@ export const Profile = () => {
   const handleUpdateProfile = async (values) => {
     setIsLoading(true);
     try {
-      console.log("Iniciando atualização de perfil");
-      console.log("Valores do formulário:", values);
-      console.log("Estado atual do usuário:", user);
-      console.log("Estado atual do userData:", userData);
-
-      // Verificar se houve mudanças reais
       const hasDisplayNameChanged = values.displayName !== (userData.displayName || "");
       const hasPhotoURLChanged = values.photoURL !== (userData.photoURL || "");
 
       if (!hasDisplayNameChanged && !hasPhotoURLChanged) {
-        console.log("Nenhuma mudança detectada");
         setIsEditingProfile(false);
         return;
       }
 
-      // Garantir que estamos trabalhando com strings para o Firebase
       const profileData = {
         displayName: values.displayName || null,
         photoURL: values.photoURL || null,
       };
-      console.log("Dados a serem enviados para o Firebase:", profileData);
 
-      // Atualize o perfil do usuário no Firebase
       const result = await updateUserProfile(profileData);
-      console.log("Resposta do Firebase após atualização:", result);
 
-      // Atualize o estado local IMEDIATAMENTE
       setUserData({
         ...userData,
         displayName: values.displayName || "",
@@ -146,9 +133,8 @@ export const Profile = () => {
         duration: 3000,
         isClosable: true,
       });
-      console.log("Atualização de perfil concluída com sucesso");
     } catch (error) {
-      console.error("Erro completo durante atualização de perfil:", error);
+      console.error("Full error during profile update:", error);
 
       toast({
         title: "Error",
@@ -262,9 +248,6 @@ export const Profile = () => {
     );
   }
 
-  console.log("values.displayName:", userData.displayName);
-  console.log("values.photoURL:", userData.photoURL);
-
   return (
     <Layout isMoviePage={false}>
       <Container maxW="container.md" py={10}>
@@ -302,13 +285,11 @@ export const Profile = () => {
                 validationSchema={ProfileValidationSchema}
                 onSubmit={handleUpdateProfile}
               >
-                {({ errors, touched, isValid, values, dirty }) => {
-                  console.log("Formik errors:", errors);
+                {({ errors, touched, isValid, values }) => {
                   return (
                     <Form style={{ width: "100%" }}>
                       <VStack spacing={5} align="start">
                         <HStack spacing={6} width="100%">
-                          {/* Usar values do formulário para mostrar preview da imagem */}
                           <Avatar
                             size="xl"
                             name={values.displayName || user?.email}

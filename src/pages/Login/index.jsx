@@ -15,7 +15,6 @@ export const Login = () => {
   function handleSignIn(values) {
     signInWithEmailPassword(values.email, values.password)
       .then((response) => {
-        console.log(response);
         toast({
           title: "Success",
           description: "You have successfully signed in.",
