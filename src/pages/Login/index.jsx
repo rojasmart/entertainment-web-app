@@ -36,7 +36,7 @@ export const Login = () => {
   }
 
   if (loading) {
-    return <p>carregando...</p>;
+    return <p>loading...</p>;
   }
   if (user) {
     return <Navigate to="/Home" replace={true} />;
