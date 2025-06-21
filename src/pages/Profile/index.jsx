@@ -301,16 +301,14 @@ export const Profile = () => {
                           <VStack align="start" flex={1}>
                             {isEditingProfile ? (
                               <FormControl isInvalid={errors.displayName && touched.displayName}>
-                                <FormLabel htmlFor="displayName" color="white">
-                                  Display Name
-                                </FormLabel>
+                                <FormLabel htmlFor="displayName">Display Name</FormLabel>
                                 <Field as={Input} id="displayName" name="displayName" color="white" />
                                 <FormErrorMessage>{errors.displayName}</FormErrorMessage>
                               </FormControl>
                             ) : (
                               <>
                                 <Text color="gray.400">Display Name</Text>
-                                <Text color="white" fontWeight="bold" fontSize="lg">
+                                <Text fontWeight="bold" fontSize="lg">
                                   {userData.displayName || "Not set"}
                                 </Text>
                               </>
@@ -320,10 +318,8 @@ export const Profile = () => {
 
                         {isEditingProfile && (
                           <FormControl isInvalid={errors.photoURL && touched.photoURL}>
-                            <FormLabel htmlFor="photoURL" color="white">
-                              Profile Picture URL
-                            </FormLabel>
-                            <Field as={Input} id="photoURL" name="photoURL" placeholder="https://example.com/your-photo.jpg" color="white" />
+                            <FormLabel htmlFor="photoURL">Profile Picture URL</FormLabel>
+                            <Field as={Input} id="photoURL" name="photoURL" placeholder="https://example.com/your-photo.jpg" />
                             <FormErrorMessage>{errors.photoURL}</FormErrorMessage>
                           </FormControl>
                         )}
@@ -379,9 +375,7 @@ export const Profile = () => {
                     <VStack spacing={5} align="start" width="100%">
                       {isEditingEmail ? (
                         <FormControl isInvalid={errors.email && touched.email}>
-                          <FormLabel htmlFor="email" color="white">
-                            Email Address
-                          </FormLabel>
+                          <FormLabel htmlFor="email">Email Address</FormLabel>
                           <Field as={Input} id="email" name="email" type="email" color="white" />
                           <FormErrorMessage>{errors.email}</FormErrorMessage>
                         </FormControl>
@@ -517,8 +511,8 @@ export const Profile = () => {
 
               <HStack justifyContent="space-between" width="100%">
                 <HStack>
-                  <Icon as={colorMode === "dark" ? MoonIcon : SunIcon} color="white" />
-                  {colorMode === "dark" ? <Text color="white">Dark Mode</Text> : <Text color="white">Light Mode</Text>}
+                  <Icon as={colorMode === "dark" ? MoonIcon : SunIcon} />
+                  {colorMode === "dark" ? <Text>Dark Mode</Text> : <Text>Light Mode</Text>}
                 </HStack>
                 <Switch colorScheme="green" isChecked={colorMode === "dark"} onChange={toggleColorMode} size="lg" />
               </HStack>
@@ -546,7 +540,7 @@ export const Profile = () => {
       {/* Delete Account Confirmation Dialog */}
       <AlertDialog isOpen={isDeleteAlertOpen} leastDestructiveRef={cancelRef} onClose={onDeleteAlertClose}>
         <AlertDialogOverlay>
-          <AlertDialogContent bg="var(--dark-blue)" color="white">
+          <AlertDialogContent bg={boxBg}>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Delete Account
             </AlertDialogHeader>
