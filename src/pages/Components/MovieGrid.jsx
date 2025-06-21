@@ -177,11 +177,11 @@ export function MovieCard({ item, isBookmarked, onToggleBookmark }) {
 
       <Box as="div" mt={2}>
         <List styleType="disc" display="flex" flexDirection="row">
-          <ListItem color={"white"} fontSize={"md"} marginRight={6} listStyleType="none" fontWeight={"100"}>
+          <ListItem fontSize={"md"} marginRight={6} listStyleType="none" fontWeight={"100"}>
             {item.isMovie && item.release_date && new Date(item.release_date).getFullYear()}
             {!item.isMovie && item.first_air_date && new Date(item.first_air_date).getFullYear()}
           </ListItem>
-          <ListItem color={"white"} fontSize={"md"} fontWeight={"100"}>
+          <ListItem fontSize={"md"} fontWeight={"100"}>
             {item.isMovie ? (
               <Flex align="center">
                 <Image src={MoviesIcon} alt="movies" boxSize="15px" />
@@ -196,9 +196,7 @@ export function MovieCard({ item, isBookmarked, onToggleBookmark }) {
           </ListItem>
         </List>
       </Box>
-      <Text color={"white"} fontSize={"1xl"}>
-        {item.isMovie ? item.title : item.original_name}
-      </Text>
+      <Text fontSize={"1xl"}>{item.isMovie ? item.title : item.original_name}</Text>
     </Box>
   );
 }

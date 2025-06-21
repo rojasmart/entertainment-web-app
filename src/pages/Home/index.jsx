@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Box, Flex, Menu, MenuButton, Avatar, MenuList, MenuItem, Button, Stack, Container, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Menu, MenuButton, Avatar, MenuList, MenuItem, Button, Stack, Container, Image, Text, useColorModeValue } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/auth";
@@ -84,6 +84,8 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
     signOut();
   };
 
+  const boxBg = useColorModeValue("gray.100", "var(--semi-dark-blue)");
+
   const isMobile = useIsMobile();
 
   return (
@@ -139,7 +141,7 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
             height={{ base: "80px", md: "90vh" }}
             borderRadius={"20px"}
             m={6}
-            backgroundColor="var(--semi-dark-blue)"
+            backgroundColor={boxBg}
             overflowX="auto"
           >
             <Box display={"flex"} flexDirection={{ base: "row", md: "column" }} gap={6} alignItems={"center"}>
@@ -153,7 +155,7 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
               <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} mb={{ base: 0, md: 6 }} p={0}>
                 <Flex direction="column" align="center">
                   <Avatar size={"sm"} src={user?.photoURL || undefined} name={user?.displayName || user?.email || ""} />
-                  <Text mt={1} fontSize="sm" color="white" display={{ base: "none", md: "block" }}>
+                  <Text mt={1} fontSize="xs" display={{ base: "none", md: "block" }}>
                     {user?.displayName || user?.email || "User"}
                   </Text>
                 </Flex>
@@ -222,7 +224,7 @@ export const Layout = ({ children, backgroundImage, isMoviePage }) => {
             height={{ base: "80px", md: "90vh" }}
             borderRadius={"20px"}
             m={6}
-            backgroundColor="var(--semi-dark-blue)"
+            backgroundColor={boxBg}
             overflowX="auto"
           >
             <Box display={"flex"} flexDirection={{ base: "row", md: "column" }} gap={6} alignItems={"center"}>
